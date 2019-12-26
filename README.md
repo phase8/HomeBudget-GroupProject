@@ -8,7 +8,7 @@
 (https://www.mongodb.com)
 4. Add MongoDB folder to the Path Environment Variable. Example for windows:
 (https://dangphongvanthanh.wordpress.com/2017/06/12/add-mongos-bin-folder-to-the-path-environment-variable/)
-5. In terminal, run serwer:
+5. In terminal, run server:
 ```
 mongod
 ```
@@ -20,4 +20,27 @@ https://github.com/BinaryWorlds/HomeBudget-GroupProject.git
 8. In VS terminal:
 ```
 npm install
+cd client
+npm install
+cd..
+cd backend
+npm install
+```
+9. Multiple run(in the main directory):
+```
+npm start
+```
+OR:
+
+
+Start backend:
+```
+cd backend
+node server.js
+```
+
+Start frontend:
+```
+cd client
+npm start
 ```
