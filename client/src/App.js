@@ -1,9 +1,12 @@
 import React from "react";
+import Router from './Router';
 
-class App extends React.Component {
-  render() {
-    return <div>Do dziela</div>;
-  }
+function App() {
+  return (
+    <div className="App">
+      <Router />
+    </div>
+  );
 }
 
 export default App;
