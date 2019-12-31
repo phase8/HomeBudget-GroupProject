@@ -29,6 +29,14 @@ class Welcomepage extends React.Component{
                     Cześć (nazwa użytkownika)! Miło Cię widzieć ponownie. 
                     Zaoszczędź z nami trochę $$$ żeby Ci potem starczyło na waciki. 
                 </div>
+                <div className='currentFinantialStatus'>
+                    <div className='statusDescription'>
+                        Twoje obecne środki:
+                    </div>
+                    <div className='cashAmount'>
+
+                    </div>
+                </div>
 
             </div>
         )
