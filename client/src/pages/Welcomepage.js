@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import '../styles/page.css'
 
 class Welcomepage extends React.Component{
+    logout = () => {
+    localStorage.removeItem("token");
+    };
     render() {
         return (
             <div className='pageContainer'>
@@ -21,7 +24,7 @@ class Welcomepage extends React.Component{
                     <div className='controlButton'>
                         Historia
                     </div>
-                    <Link to ='/'>
+                    <Link to ='/' onClick={this.logout}>
                         <div className='controlButton'>
                             Wyloguj (nazwa użytkownika)
                         </div>
@@ -55,3 +58,4 @@ class Welcomepage extends React.Component{
 }
 
 export default Welcomepage;
+
