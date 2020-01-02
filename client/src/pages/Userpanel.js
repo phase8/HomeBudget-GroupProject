@@ -2,16 +2,13 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import '../styles/page.css'
 
-class Welcomepage extends React.Component{
-    logout = () => {
-    localStorage.removeItem("token");
-    };
+class Userpanel extends React.Component{
     render() {
         return (
             <div className='pageContainer'>
                 <div className='controls'>
                     <Link to ='/Userpanel'>
-                        <div className='controlButton'>
+                        <div className='controlButton' style={{color: "gray",}}>
                             Panel użytkownika
                         </div>
                     </Link>
@@ -24,15 +21,11 @@ class Welcomepage extends React.Component{
                     <div className='controlButton'>
                         Historia
                     </div>
-                    <Link to ='/' onClick={this.logout}>
+                    <Link to ='/'>
                         <div className='controlButton'>
                             Wyloguj (nazwa użytkownika)
                         </div>
                     </Link>
-                </div>
-                <div className='notification'>
-                    Cześć (nazwa użytkownika)! Miło Cię widzieć ponownie. 
-                    Zaoszczędź z nami trochę $$$ żeby Ci potem starczyło na waciki. 
                 </div>
                 <div className='statusContainer'>
                     <div className='currentFinantialStatus'>
@@ -57,5 +50,4 @@ class Welcomepage extends React.Component{
     }
 }
 
-export default Welcomepage;
-
+export default Userpanel;
