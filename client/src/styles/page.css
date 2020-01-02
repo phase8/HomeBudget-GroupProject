@@ -28,13 +28,22 @@
 a{
     color: black;  
 }
-.welcomeAgain{
+.notification{
     width: 50vw;
     background-color: rgb(80, 170, 166);
     padding: 15px;
     border-radius: 15px;
     text-align: justify;
     text-align-last: center;
+    position: absolute;
+    top: 125px;
+}
+.statusContainer{
+    height: 350px;
+    width: 60vw;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
 .currentFinantialStatus{
     width: 60vw;
@@ -49,7 +58,24 @@ a{
 .statusDescription, .cashAmount{
     width: 100%;
     height: 50px;
+
+}
+.statusDescription, .cashAmount, .addCash, .addGoal{
     text-align: center;
     font-size: 36px;
     padding: 15px;
+}
+.controlBox{
+    width: 60vw;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    align-items: center;
+}
+.addCash, .addGoal{
+    width: 100%;
+    height: 50px;
+    background-color: rgb(80, 170, 166);
+    text-align: center;
 }
