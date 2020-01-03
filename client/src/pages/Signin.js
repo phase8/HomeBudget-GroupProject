@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import apiConfig from "../api/apiConfig";
 import { Redirect } from "react-router";
+
+import apiConfig from "../api/apiConfig";
+import formValidate from "../helper/formValidate";
 
 const _ = require("lodash");
 
@@ -9,8 +11,10 @@ class Signin extends React.Component {
   state = {
     email: "",
     password: "",
-    logged: false
+    logged: false,
+    errors: { email: "", password: "", apiMsg: "" }
   };
+
   onFormSubmit = async event => {
     event.preventDefault();
 
@@ -21,9 +25,18 @@ class Signin extends React.Component {
         this.setState({ logged: true });
       })
       .catch(err => {
-        console.log("AXIOS ERROR: ", err);
+        let errors = this.state.errors;
+        errors.apiMsg = err.response.data;
+        this.setState({ errors });
       });
   };
+
+  onInputChange = async event => {
+    let errors = this.state.errors;
+    errors[event.target.name] = formValidate(event);
+    this.setState({ errors, [event.target.name]: event.target.value });
+  };
+
   render() {
     if (this.state.logged === true || localStorage.getItem("token"))
       return <Redirect to="/welcomepage" />;
@@ -39,27 +52,45 @@ class Signin extends React.Component {
                 <div className="ui left icon input">
                   <i className="envelope icon"></i>
                   <input
+                    name="email"
                     type="text"
                     placeholder="E-mail address"
+                    autoComplete="on"
                     value={this.state.email}
-                    onChange={e => this.setState({ email: e.target.value })}
+                    onChange={e => this.onInputChange(e)}
                   />
                 </div>
+                {this.state.errors.email && (
+                  <span className="ui pointing above red basic label">
+                    {this.state.errors.email}
+                  </span>
+                )}
               </div>
               <div className="field">
                 <div className="ui left icon input">
                   <i className="lock icon"></i>
                   <input
+                    name="password"
                     type="password"
                     placeholder="Password"
+                    autoComplete="on"
                     value={this.state.password}
-                    onChange={e => this.setState({ password: e.target.value })}
+                    onChange={e => this.onInputChange(e)}
                   />
                 </div>
+                {this.state.errors.password && (
+                  <span className="ui pointing above red basic label">
+                    {this.state.errors.password}
+                  </span>
+                )}
               </div>
               <button className="ui fluid large blue button">Login</button>
             </div>
-            <div className="ui error message"></div>
+            {this.state.errors.apiMsg && (
+              <div className="ui negative message">
+                {this.state.errors.apiMsg}
+              </div>
+            )}
           </form>
           <div className="ui message">
             New to us?
