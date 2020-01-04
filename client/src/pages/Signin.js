@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 
 import apiConfig from "../api/apiConfig";
-import formValidate from "../helper/formValidate";
+import Input from "./components/formInput";
 
 const _ = require("lodash");
 
@@ -12,7 +12,11 @@ class Signin extends React.Component {
     email: "",
     password: "",
     logged: false,
-    errors: { email: "", password: "", apiMsg: "" }
+    errorApiMsg: ""
+  };
+
+  updateForm = (name, value) => {
+    this.setState({ [name]: value });
   };
 
   onFormSubmit = async event => {
@@ -25,16 +29,10 @@ class Signin extends React.Component {
         this.setState({ logged: true });
       })
       .catch(err => {
-        let errors = this.state.errors;
-        errors.apiMsg = err.response.data;
-        this.setState({ errors });
+        let errorApiMsg = this.state.errorApiMsg;
+        errorApiMsg = err.response.data;
+        this.setState({ errorApiMsg });
       });
-  };
-
-  onInputChange = async event => {
-    let errors = this.state.errors;
-    errors[event.target.name] = formValidate(event);
-    this.setState({ errors, [event.target.name]: event.target.value });
   };
 
   render() {
@@ -48,47 +46,23 @@ class Signin extends React.Component {
           </h2>
           <form onSubmit={this.onFormSubmit} className="ui large form">
             <div className="ui stacked segment">
-              <div className="field">
-                <div className="ui left icon input">
-                  <i className="envelope icon"></i>
-                  <input
-                    name="email"
-                    type="text"
-                    placeholder="E-mail address"
-                    autoComplete="on"
-                    value={this.state.email}
-                    onChange={e => this.onInputChange(e)}
-                  />
-                </div>
-                {this.state.errors.email && (
-                  <span className="ui pointing above red basic label">
-                    {this.state.errors.email}
-                  </span>
-                )}
-              </div>
-              <div className="field">
-                <div className="ui left icon input">
-                  <i className="lock icon"></i>
-                  <input
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    autoComplete="on"
-                    value={this.state.password}
-                    onChange={e => this.onInputChange(e)}
-                  />
-                </div>
-                {this.state.errors.password && (
-                  <span className="ui pointing above red basic label">
-                    {this.state.errors.password}
-                  </span>
-                )}
-              </div>
+              <Input
+                name={"email"}
+                type={"text"}
+                placeholder={"E-mail address"}
+                updateForm={this.updateForm}
+              />
+              <Input
+                name={"password"}
+                type={"password"}
+                placeholder={"Password"}
+                updateForm={this.updateForm}
+              />
               <button className="ui fluid large blue button">Login</button>
             </div>
-            {this.state.errors.apiMsg && (
+            {this.state.errorApiMsg && (
               <div className="ui negative message">
-                {this.state.errors.apiMsg}
+                {this.state.errorApiMsg}
               </div>
             )}
           </form>
