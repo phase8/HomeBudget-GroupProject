@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
   await user.save();
 
   const token = user.generateToken();
-  res.send({ ..._.pick(user, ["_id", "name", "email"]), token });
+  res.send({ ..._.pick(user, ["name", "email"]), token });
 });
 
 module.exports = router;

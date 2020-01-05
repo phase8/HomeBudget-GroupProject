@@ -39,10 +39,12 @@ const User = mongoose.model("User", userSchema);
 function validateUser(user) {
   const schema = {
     name: Joi.string()
+      .regex(/^[a-zA-Z0-9,.]*$/)
       .min(5)
       .max(32)
       .required(),
     email: Joi.string()
+      .regex(/^[a-zA-Z0-9,.@]*$/)
       .min(5)
       .max(255)
       .required()
