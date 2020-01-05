@@ -24,6 +24,7 @@
     background-color: rgb(180, 181, 194);
     padding: 15px;
     font-size: 30px;
+    /* there is some in-line jsx styling for indicating current page */
 }
 a{
     color: black;  
@@ -35,6 +36,15 @@ a{
     border-radius: 15px;
     text-align: justify;
     text-align-last: center;
+    position: absolute;
+    top: 125px;
+}
+.dataContainer{
+    height: 80vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     top: 125px;
 }
