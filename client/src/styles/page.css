@@ -10,7 +10,7 @@
     background-color: rgb(182, 213, 216);
 }
 .controls{
-    position: absolute;
+    /* position: absolute; */
     top: 0px;
     width: 100vw;
     height: 125px;
@@ -26,9 +26,6 @@
     font-size: 30px;
     /* there is some in-line jsx styling for indicating current page */
 }
-a{
-    color: black;  
-}
 .notification{
     width: 50vw;
     background-color: rgb(80, 170, 166);
@@ -36,7 +33,7 @@ a{
     border-radius: 15px;
     text-align: justify;
     text-align-last: center;
-    position: absolute;
+    /* position: absolute; */
     top: 125px;
 }
 .dataContainer{
@@ -45,7 +42,7 @@ a{
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    /* position: absolute; */
     top: 125px;
 }
 .statusContainer{

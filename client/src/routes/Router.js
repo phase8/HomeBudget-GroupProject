@@ -1,0 +1,19 @@
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+
+import Signup from "../pages/Signup";
+import Signin from "../pages/Signin";
+import UserAppRouter from "./UserAppRouter";
+import { userName } from "../helper/urls";
+
+const Router = () => {
+  return (
+    <Switch>
+      <Route exact path="/" component={Signin}></Route>
+      <Route path="/signup" component={Signup}></Route>
+      <Route path={`/:${userName}`} component={UserAppRouter}></Route>
+    </Switch>
+  );
+};
+
+export default Router;

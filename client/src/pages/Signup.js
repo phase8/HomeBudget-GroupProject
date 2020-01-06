@@ -4,17 +4,22 @@ import { Redirect } from "react-router";
 
 import apiConfig from "../api/apiConfig";
 import Input from "./components/formInput";
+import { login } from "../helper/tools";
+import { welcomepageUrl } from "../helper/urls";
 
 const _ = require("lodash");
 
 class Signup extends React.Component {
-  state = {
-    name: "",
-    email: "",
-    password: "",
-    logged: false,
-    errorApiMsg: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      email: "",
+      password: "",
+      logged: false,
+      errorApiMsg: ""
+    };
+  }
 
   updateForm = (name, value) => {
     this.setState({ [name]: value });
@@ -26,7 +31,7 @@ class Signup extends React.Component {
     await apiConfig
       .post("/users", _.pick(this.state, ["name", "email", "password"]))
       .then(res => {
-        localStorage.setItem("token", res.data.token);
+        login(res.data);
         this.setState({ logged: true });
       })
       .catch(err => {
@@ -38,7 +43,8 @@ class Signup extends React.Component {
 
   render() {
     if (this.state.logged === true || localStorage.getItem("token"))
-      return <Redirect to="/welcomepage" />;
+      return <Redirect to={welcomepageUrl} />;
+
     return (
       <div className="signup ui middle aligned center aligned grid">
         <div className="twelve wide mobile eight wide tablet five wide computer column">
@@ -52,18 +58,21 @@ class Signup extends React.Component {
                   name={"name"}
                   type={"text"}
                   placeholder={"Name"}
+                  icon={"user"}
                   updateForm={this.updateForm}
                 />
                 <Input
                   name={"email"}
                   type={"text"}
                   placeholder={"E-mail address"}
+                  icon={"envelope"}
                   updateForm={this.updateForm}
                 />
                 <Input
                   name={"password"}
                   type={"password"}
                   placeholder={"Password"}
+                  icon={"lock"}
                   updateForm={this.updateForm}
                 />
               </div>

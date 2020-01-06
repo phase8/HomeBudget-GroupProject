@@ -4,16 +4,21 @@ import { Redirect } from "react-router";
 
 import apiConfig from "../api/apiConfig";
 import Input from "./components/formInput";
+import { login } from "../helper/tools";
+import { welcomepageUrl } from "../helper/urls";
 
 const _ = require("lodash");
 
 class Signin extends React.Component {
-  state = {
-    email: "",
-    password: "",
-    logged: false,
-    errorApiMsg: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+      logged: false,
+      errorApiMsg: ""
+    };
+  }
 
   updateForm = (name, value) => {
     this.setState({ [name]: value });
@@ -25,7 +30,7 @@ class Signin extends React.Component {
     await apiConfig
       .post("/auth", _.pick(this.state, ["email", "password"]))
       .then(res => {
-        localStorage.setItem("token", res.data.token);
+        login(res.data);
         this.setState({ logged: true });
       })
       .catch(err => {
@@ -37,7 +42,7 @@ class Signin extends React.Component {
 
   render() {
     if (this.state.logged === true || localStorage.getItem("token"))
-      return <Redirect to="/welcomepage" />;
+      return <Redirect to={welcomepageUrl} />;
     return (
       <div className="signin ui middle aligned center aligned grid">
         <div className="twelve wide mobile eight wide tablet five wide computer column">
@@ -50,12 +55,14 @@ class Signin extends React.Component {
                 name={"email"}
                 type={"text"}
                 placeholder={"E-mail address"}
+                icon={"envelope"}
                 updateForm={this.updateForm}
               />
               <Input
                 name={"password"}
                 type={"password"}
                 placeholder={"Password"}
+                icon={"lock"}
                 updateForm={this.updateForm}
               />
               <button className="ui fluid large blue button">Login</button>

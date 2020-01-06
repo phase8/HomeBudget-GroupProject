@@ -18,7 +18,7 @@ class Input extends React.Component {
     return (
       <div className="field">
         <div className="ui left icon input">
-          <i className="envelope icon"></i>
+          <i className={`${this.props.icon} icon`}></i>
           <input
             name={this.props.name}
             type={this.props.type}
