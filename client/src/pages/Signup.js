@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
 
 import apiConfig from "../api/apiConfig";
-import Input from "./components/formInput";
+import Input from "./components/FormInput";
 import { login } from "../helper/tools";
 import { welcomepageUrl } from "../helper/urls";
 

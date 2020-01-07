@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/page.css";
-import { userpanel } from "./Userpanel.js";
+import { userpanel } from "./components/userpanel.js";
 
 const notification = [
   <div className="notification">

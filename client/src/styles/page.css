@@ -1,4 +1,3 @@
-
 .pageContainer{
     display: flex;
     align-items: center;
@@ -10,7 +9,6 @@
     background-color: rgb(182, 213, 216);
 }
 .controls{
-    /* position: absolute; */
     top: 0px;
     width: 100vw;
     height: 125px;
@@ -24,7 +22,6 @@
     background-color: rgb(180, 181, 194);
     padding: 15px;
     font-size: 30px;
-    /* there is some in-line jsx styling for indicating current page */
 }
 .notification{
     width: 50vw;
@@ -33,7 +30,6 @@
     border-radius: 15px;
     text-align: justify;
     text-align-last: center;
-    /* position: absolute; */
     top: 125px;
 }
 .dataContainer{
@@ -42,7 +38,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* position: absolute; */
     top: 125px;
 }
 .statusContainer{
