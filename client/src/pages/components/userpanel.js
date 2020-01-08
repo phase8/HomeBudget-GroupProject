@@ -1,5 +1,12 @@
 import React from "react";
-import "../../styles/page.css";
+import { Link } from "react-router-dom";
+import { Redirect } from "react-router";
+import {
+  AddIncomeExpenseUrl,
+  goalsUrl,
+} from "../../helper/urls";
+import { checkActiveUrl } from "../../helper/tools";
+
 
 export const userpanel = [
   <div className="dataContainer">
@@ -9,8 +16,14 @@ export const userpanel = [
         <div className="cashAmount"></div>
       </div>
       <div className="controlBox">
-        <div className="addCash">Dodaj przychód lub wydatek</div>
-        <div className="addGoal">Dodaj cel</div>
+        <Link to={goalsUrl} className={`${checkActiveUrl(goalsUrl)} addGoal `}>
+          Dodaj cel
+          </Link>
+        <Link to={AddIncomeExpenseUrl} className={`${checkActiveUrl(AddIncomeExpenseUrl)} addCash `}>
+          Dodaj przychód lub wydatek
+          </Link>
+
+
       </div>
     </div>
   </div>

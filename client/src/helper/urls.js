@@ -3,7 +3,8 @@ let userName,
   categoryUrl,
   historyUrl,
   goalsUrl,
-  accountManagmentUrl;
+  accountManagmentUrl,
+  AddIncomeExpenseUrl;
 
 export const updatePath = () => {
   userName = localStorage.getItem("name") || "appuser";
@@ -12,6 +13,8 @@ export const updatePath = () => {
   historyUrl = `/${userName}/history`;
   goalsUrl = `/${userName}/goals`;
   accountManagmentUrl = `/${userName}/userpanel`;
+  AddIncomeExpenseUrl = `/${userName}/addincomeExpense`;
+
 };
 updatePath();
 
@@ -21,5 +24,6 @@ export {
   categoryUrl,
   historyUrl,
   goalsUrl,
-  accountManagmentUrl
+  accountManagmentUrl,
+  AddIncomeExpenseUrl
 };
