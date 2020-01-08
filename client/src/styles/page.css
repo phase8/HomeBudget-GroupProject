@@ -90,3 +90,12 @@
   background-color: rgb(80, 170, 166);
   text-align: center;
 }
+
+/* CATEGORIES CSS */
+
+.category-input {
+  text-align: center;
+  font-size: 24px;
+  padding: 15px;
+  display: inline-block;
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/page.css';
 import { Link } from 'react-router-dom';
 import axios from '../api/apiConfig';
+import '../styles/page.css';
 
 const categoryTypes = {
   INCOME: 'INCOME',
@@ -49,8 +50,8 @@ class CategoryAdd extends React.Component {
       <div className='pageContainer'>
         <div className='statusContainer'>
           <div className='currentFinantialStatus'>
-            <form onSubmit={this.handleSubmit}>
-              <div className='form-input'>
+            <form onSubmit={this.handleSubmit} className=''>
+              <div className='form-input category-input'>
                 <input
                   type='text'
                   name='name'
@@ -59,7 +60,7 @@ class CategoryAdd extends React.Component {
                   onChange={this.handleChange}
                 />
               </div>
-              <div className='form-input'>
+              <div className='form-input' className='category-input'>
                 <select
                   name='type'
                   value={this.state.type}
@@ -69,7 +70,7 @@ class CategoryAdd extends React.Component {
                   <option value={categoryTypes.EXPENSE}>Wydatek</option>
                 </select>
               </div>
-              <button type='submit' className='form-input'>
+              <button type='submit' className='form-input category-input'>
                 Dodaj kategorię
               </button>
             </form>
