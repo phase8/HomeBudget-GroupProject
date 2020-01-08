@@ -12,9 +12,8 @@ export const updatePath = () => {
   categoryUrl = `/${userName}/category`;
   historyUrl = `/${userName}/history`;
   goalsUrl = `/${userName}/goals`;
-  accountManagmentUrl = `/${userName}/userpanel`;
+  accountManagmentUrl = `/${userName}/accountManagment`;
   AddIncomeExpenseUrl = `/${userName}/addincomeExpense`;
-
 };
 updatePath();
 

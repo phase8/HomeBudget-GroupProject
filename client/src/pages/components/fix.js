@@ -6,7 +6,6 @@ class Input extends React.Component {
     value: "",
     error: ""
   };
-
   onInputChange = event => {
     let error = this.state.error;
     error = formValidate(event);

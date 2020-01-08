@@ -1,20 +1,16 @@
 import React from "react";
 import "../styles/page.css";
-import { userpanel } from "./components/userpanel.js";
-
-const notification = [
-  <div className="notification">
-    Cześć (nazwa użytkownika)! Miło Cię widzieć ponownie. Zaoszczędź z nami
-    trochę $$$ żeby Ci potem starczyło na waciki.
-  </div>
-];
+import Userpanel from "./components/userpanel.js";
 
 class Welcomepage extends React.Component {
   render() {
     return (
       <div className="pageContainer">
-        {userpanel}
-        {notification}
+        <Userpanel />
+        <div className="notification">
+          Cześć {localStorage.getItem("name")}! Miło Cię widzieć ponownie.
+          Zaoszczędź z nami trochę $$$ żeby Ci potem starczyło na waciki.
+        </div>
       </div>
     );
   }
