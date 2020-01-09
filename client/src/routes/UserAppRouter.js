@@ -38,21 +38,13 @@ const UserAppRouter = () => {
         <Route exact path={categoryUrl} component={Category}></Route>
         <Route path={categoryAddUrl} component={CategoryAdd}></Route>
         <Route path={categoryIncomeUrl} component={CategoryIncomeList}></Route>
-        <Route
-          path={categoryExpenseUrl}
-          component={CategoryExpenseList}
-        ></Route>
+        <Route path={categoryExpenseUrl} component={CategoryExpenseList}></Route>
         <Route path={accountManagmentUrl} component={AccountManagment}></Route>
         <Route path={AddIncomeExpenseUrl} component={AddIncomeExpense}></Route>
-
-        
-        <Redirect from="*" to="/404" />
-
         <Route path={goalsUrl} component={Target}></Route>
+        <Route path={historyUrl} component={History}></Route>
         <Route path='/404' component={PageNotFound} />
         <Redirect from='*' to='/404' />
-        <Route path={historyUrl} component={History}></Route>
-
       </Switch>
     </>
   );
