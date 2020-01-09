@@ -152,10 +152,12 @@ class AddIncomeExpense extends React.Component {
               onChange={this.handleChange}
             >
               <option
-                disabled={this.state.operationtype == "przychód" ? true : false}
+                disabled={
+                  this.state.operationtype === "przychód" ? true : false
+                }
                 value="wybierz"
               >
-                {this.state.operationtype == "przychód"
+                {this.state.operationtype === "przychód"
                   ? "nie dotyczy"
                   : "wybierz"}
               </option>
@@ -163,7 +165,7 @@ class AddIncomeExpense extends React.Component {
                 return (
                   <option
                     disabled={
-                      this.state.operationtype == "przychód" ? true : false
+                      this.state.operationtype === "przychód" ? true : false
                     }
                     name="category"
                     value={obj.total}

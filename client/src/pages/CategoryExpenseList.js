@@ -1,25 +1,25 @@
-import React from 'react';
-import '../styles/page.css';
-import { Link } from 'react-router-dom';
-import axios from '../api/apiConfig';
-import { categoryAddUrl } from '../helper/urls';
+import React from "react";
+import "../styles/page.css";
+import { Link } from "react-router-dom";
+import axios from "../api/apiConfig";
+import { categoryAddUrl } from "../helper/urls";
 
 class CategoryExpenseList extends React.Component {
   constructor() {
     super();
     this.state = {
       categories: [],
-      categoryType: 'EXPENSE',
-      selectedCategoryId: ''
+      categoryType: "EXPENSE",
+      selectedCategoryId: ""
     };
   }
 
   getCategories = type => {
-    const query = type ? `?type=${type}` : '';
+    const query = type ? `?type=${type}` : "";
 
     axios({
-      url: '/categories' + query,
-      method: 'GET'
+      url: "/categories" + query,
+      method: "GET"
     })
       .then(res => {
         this.setState({
@@ -27,7 +27,7 @@ class CategoryExpenseList extends React.Component {
         });
       })
       .catch(() => {
-        console.log('Internal server error');
+        console.log("Internal server error");
       });
   };
 
@@ -43,42 +43,42 @@ class CategoryExpenseList extends React.Component {
 
   deleteCategory() {
     axios({
-      url: '/categories/',
+      url: "/categories/",
       data: {
         _id: this.state.selectedCategoryId
       },
-      method: 'DELETE'
+      method: "DELETE"
     })
       .then(() => {
-        console.log('Category deleted successfully');
+        console.log("Category deleted successfully");
       })
       .catch(() => {
-        console.log('Internal server error');
+        console.log("Internal server error");
       });
   }
 
   render() {
     return (
-      <div className='pageContainer'>
-        <div className='categories-container'>
+      <div className="pageContainer">
+        <div className="categories-container">
           <h2>Kategorie wydatków</h2>
           <ul>
             {this.state.categories.map(category => (
               <li key={category._id}>
                 <button
-                  className='category-button'
+                  className="category-button"
                   onClick={() => this.onClickHandle(category._id)}
                 >
                   {category.name}
                 </button>
               </li>
             ))}
-            <div className='action-buttons'>
-              <button className='category-button-action'>
+            <div className="action-buttons">
+              <button className="category-button-action">
                 <Link to={categoryAddUrl}>Dodaj kategorię</Link>
               </button>
               <button
-                className='category-button-action'
+                className="category-button-action"
                 onClick={this.deleteCategory}
               >
                 Usuń kategorię

@@ -6,11 +6,11 @@ let userName,
   categoryExpenseUrl,
   historyUrl,
   goalsUrl,
-  accountManagmentUrl,
+  accountManagementUrl,
   AddIncomeExpenseUrl;
 
 export const updatePath = () => {
-  userName = localStorage.getItem('name') || 'appuser';
+  userName = localStorage.getItem("name") || "appuser";
   welcomepageUrl = `/${userName}/welcomepage`;
   categoryUrl = `/${userName}/category`;
   categoryAddUrl = `${categoryUrl}/add`;
@@ -18,7 +18,7 @@ export const updatePath = () => {
   categoryExpenseUrl = `${categoryUrl}/expense`;
   historyUrl = `/${userName}/history`;
   goalsUrl = `/${userName}/goals`;
-  accountManagmentUrl = `/${userName}/accountManagment`;
+  accountManagementUrl = `/${userName}/accountManagement`;
   AddIncomeExpenseUrl = `/${userName}/addincomeExpense`;
 };
 updatePath();
@@ -32,6 +32,6 @@ export {
   categoryExpenseUrl,
   historyUrl,
   goalsUrl,
-  accountManagmentUrl,
+  accountManagementUrl,
   AddIncomeExpenseUrl
 };

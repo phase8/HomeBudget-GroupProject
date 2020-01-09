@@ -1,13 +1,15 @@
 import { updatePath } from "./urls";
 
-export let hasJustLogged = false
+export let hasJustLogged = false;
 
 export const checkActiveUrl = linkTo => {
   return linkTo === window.location.pathname ? "active" : "";
 };
 const loggerSwitch = () => {
-  setTimeout(() => {hasJustLogged = false}, 5000)
-}
+  setTimeout(() => {
+    hasJustLogged = false;
+  }, 5000);
+};
 
 export const logout = () => {
   localStorage.removeItem("token");
@@ -20,6 +22,6 @@ export const login = res => {
   localStorage.setItem("name", res.name);
   localStorage.setItem("email", res.email);
   updatePath();
-  hasJustLogged = true
-  loggerSwitch()
+  hasJustLogged = true;
+  loggerSwitch();
 };

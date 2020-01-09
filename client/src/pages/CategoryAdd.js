@@ -1,16 +1,16 @@
-import React from 'react';
-import '../styles/page.css';
-import axios from '../api/apiConfig';
-import '../styles/page.css';
+import React from "react";
+import "../styles/page.css";
+import axios from "../api/apiConfig";
+import "../styles/page.css";
 
 const categoryTypes = {
-  INCOME: 'INCOME',
-  EXPENSE: 'EXPENSE'
+  INCOME: "INCOME",
+  EXPENSE: "EXPENSE"
 };
 
 class CategoryAdd extends React.Component {
   state = {
-    name: '',
+    name: "",
     type: categoryTypes.INCOME
   };
 
@@ -21,8 +21,8 @@ class CategoryAdd extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    if (this.state.name === '' || this.state.type === '') {
-      alert('Wypełnij wszystkie pola.');
+    if (this.state.name === "" || this.state.type === "") {
+      alert("Wypełnij wszystkie pola.");
       return;
     }
 
@@ -32,36 +32,36 @@ class CategoryAdd extends React.Component {
     };
 
     axios({
-      url: '/categories',
-      method: 'POST',
+      url: "/categories",
+      method: "POST",
       data: payload
     })
       .then(() => {
-        console.log('Data has been sent to the server');
+        console.log("Data has been sent to the server");
       })
       .catch(() => {
-        console.log('Internal server error');
+        console.log("Internal server error");
       });
   };
 
   render() {
     return (
-      <div className='pageContainer'>
-        <div className='statusContainer'>
-          <div className='currentFinantialStatus'>
-            <form onSubmit={this.handleSubmit} className=''>
-              <div className='form-input category-input'>
+      <div className="pageContainer">
+        <div className="statusContainer">
+          <div className="currentFinantialStatus">
+            <form onSubmit={this.handleSubmit} className="">
+              <div className="form-input category-input">
                 <input
-                  type='text'
-                  name='name'
-                  placeholder='Nazwa kategorii'
+                  type="text"
+                  name="name"
+                  placeholder="Nazwa kategorii"
                   value={this.state.title}
                   onChange={this.handleChange}
                 />
               </div>
-              <div className='form-input' className='category-input'>
+              <div className="form-input category-input">
                 <select
-                  name='type'
+                  name="type"
                   value={this.state.type}
                   onChange={this.handleChange}
                 >
@@ -69,7 +69,7 @@ class CategoryAdd extends React.Component {
                   <option value={categoryTypes.EXPENSE}>Wydatek</option>
                 </select>
               </div>
-              <button type='submit' className='form-input category-input'>
+              <button type="submit" className="form-input category-input">
                 Dodaj kategorię
               </button>
             </form>

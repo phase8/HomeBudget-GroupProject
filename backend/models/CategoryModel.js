@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const types = {
-  INCOME: 'INCOME',
-  EXPENSE: 'EXPENSE'
+  INCOME: "INCOME",
+  EXPENSE: "EXPENSE"
 };
 
 const Schema = mongoose.Schema;
@@ -15,7 +15,7 @@ const CategorySchema = new Schema({
   }
 });
 
-const CategoryModel = mongoose.model('CategoryModel', CategorySchema);
+const CategoryModel = mongoose.model("CategoryModel", CategorySchema);
 
 module.exports = {
   types,

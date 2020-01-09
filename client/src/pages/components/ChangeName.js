@@ -1,5 +1,9 @@
 import React from "react";
 import Input from "./FormInput";
+import { Redirect } from "react-router";
+import apiConfig from "../../api/apiConfig";
+import { login } from "../../helper/tools";
+import { accountManagementUrl } from "../../helper/urls";
 
 class ChangeName extends React.Component {
   constructor(props) {
@@ -7,9 +11,15 @@ class ChangeName extends React.Component {
     this.state = {
       name: "",
       confirmName: "",
-      errorMsg: ""
+      password: "",
+      errorMsg: "",
+      update: false
     };
   }
+  componentDidUpdate = () => {
+    if (this.state.update) this.setState({ update: false });
+  };
+
   updateForm = (name, value) => {
     this.setState({ [name]: value });
     if (name === "confirmName")
@@ -25,14 +35,33 @@ class ChangeName extends React.Component {
 
   onFormSubmit = async event => {
     event.preventDefault();
+    let email = localStorage.getItem("email");
+    let data = {
+      user: { email: email, password: this.state.password },
+      name: this.state.name
+    };
     if (!this.state.errorMsg && this.state.confirmName.length > 4) {
-      console.log("here add req");
+      await apiConfig
+        .post("/user/name", data)
+        .then(res => {
+          login(res.data);
+          this.setState({ errorMsg: "Success!", update: true });
+        })
+        .catch(err => {
+          let errorMsg = this.state.errorMsg;
+          errorMsg = err.response.data;
+          this.setState({ errorMsg });
+        });
     }
   };
+
   render() {
+    if (this.state.update === true)
+      return <Redirect to={accountManagementUrl} />;
+
     return (
       <div className="content">
-        <h3 className="ui grey header">Change username</h3>
+        <h3 className="ui grey header">Change user name</h3>
         <form onSubmit={this.onFormSubmit} className="ui medium form">
           <div className="ui stacked segment">
             <Input
@@ -47,6 +76,13 @@ class ChangeName extends React.Component {
               type={"text"}
               placeholder={"Confirm new name"}
               icon={"user"}
+              updateForm={this.updateForm}
+            />
+            <Input
+              name={"password"}
+              type={"password"}
+              placeholder={"Password"}
+              icon={"lock"}
               updateForm={this.updateForm}
             />
 
