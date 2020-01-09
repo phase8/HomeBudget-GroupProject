@@ -4,6 +4,7 @@ var cors = require("cors");
 const users = require("../routes/users");
 const auth = require("../routes/auth");
 const OperationsAndGoals = require("../routes/OperationsAndGoals");
+const Category = require('../routes/Category');
 
 
 module.exports = function (app) {
@@ -12,4 +13,5 @@ module.exports = function (app) {
   app.use("/api/users", users);
   app.use("/api/auth", auth);
   app.use('/api/OperationsAndGoals', OperationsAndGoals);
+  app.use('/api/categories', Category);
 };

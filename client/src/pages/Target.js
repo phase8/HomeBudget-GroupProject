@@ -14,10 +14,8 @@ class Target extends React.Component {
     title: '',
     body: '',
     posts: [],
-    total: 0
+    total: []
   };
-
-
 
   handleChange = ({ target }) => {
     const { name, value } = target;
@@ -27,6 +25,14 @@ class Target extends React.Component {
 
   submit = (event) => {
     event.preventDefault();
+
+
+    if (this.state.body < 0) {
+      alert("kwota nie może być ujemna");
+    }
+
+
+
     if (this.state.title === "" || this.state.body === "") {
       alert("Wypełnij wszystkie pola.");
     } else {
@@ -45,10 +51,14 @@ class Target extends React.Component {
           console.log('Data has been sent to the server');
           this.resetUserInputs();
           this.getBlogPost();
+          alert('Dane zostały zapisane.');
+
         })
         .catch(() => {
           console.log('Internal server error');
-        });;
+        });
+
+
     };
   }
 
@@ -65,7 +75,11 @@ class Target extends React.Component {
   componentDidMount = () => {
     this.getBlogPost();
     this.getTotal();
-  };
+
+
+  }
+
+
 
   getBlogPost = () => {
     axios.get('http://localhost:3001/api/OperationsAndGoals/getblogpost')
@@ -86,35 +100,50 @@ class Target extends React.Component {
 
 
     return posts.map((post, index) => (
-      <div key={index} className="blog-post__display">
-        <h3>{post.title}</h3>
-        <p>{post.body} zł</p>
-        <p>Do realizacji celu pozostało: {post.body - this.state.total < 0 ? 0 : post.body - this.state.total} zł </p>
+      <div key={index} className="target-display-one">
+        <div className="target-title-one">{post.title}</div>
+        <p className="target-amount-one">{post.body} zł</p>
+        <p className="target-how-much-one">Do realizacji celu pozostało: {post.body - this.state.total < 0 ? 0 : post.body - this.state.total} zł </p>
 
-        <button onClick={this.handleRemove.bind(this, post._id)}>Usuń cel</button>
+        <button className="target-remove-button" onClick={this.handleRemove.bind(this, post._id)}>Usuń cel</button>
       </div>
     ));
   };
 
   getTotal = () => {
-    axios.get('http://localhost:3001/api/OperationsAndGoals/total')
+    axios.get('http://localhost:3001/api/OperationsAndGoals/getBalance')
       .then((response) => {
         const data = response.data;
-        console.log(data)
-        this.setState({ total: data[0].total });
+
+        var mTotal = data.reduce(function (prev, cur) {
+          return prev + cur.amount;
+        }, 0);
+        console.log(mTotal);
+
+        this.setState({ total: mTotal });
         console.log('Data has been received!!');
+
       })
       .catch(() => {
         alert('błąd pobierania danych');
       });
+
+
+
+
+
+
+
+
   }
+
+
+
 
 
   handleRemove = (id) => {
 
     axios.delete('http://localhost:3001/api/OperationsAndGoals/removetarget', { data: { id: id } })
-      .then(response => { console.log(response.data) });
-
     setTimeout(function () { window.location.reload(); }, 1000)
 
   }
@@ -130,21 +159,33 @@ class Target extends React.Component {
 
   render() {
 
-    console.log('State: ', this.state);
+
     return (
-      <div className="pageContainer">
-        <div className="statusContainer">
-          <div className="currentFinantialStatus">
-            <div className="statusDescription">Dodaj cel finansowy</div>
+
+
+
+
+      <div className="target-pageContainer">
+        <div className="target-mainbox">
+
+
+
+
+          <div className="target-title-container">
+            <div className="target-box">
+              <div className="target-title">Dodaj cel finansowy</div>
+            </div>
           </div>
 
-          <div>
 
 
 
-            <form onSubmit={this.submit}>
-              <div className="form-input">
+          <div className="target-form-container">
+            <form className="target-form" onSubmit={this.submit}>
+
+              <div className="target-inputbox">
                 <input
+                  className="target-form-input"
                   type="text"
                   name="title"
                   placeholder="nazwa celu"
@@ -152,8 +193,11 @@ class Target extends React.Component {
                   onChange={this.handleChange}
                 />
               </div>
-              <div className="form-input">
-                <input
+
+
+
+              <div className="target-inputbox">
+                <input className="target-form-input"
                   type="number"
                   placeholder="kwota"
                   name="body"
@@ -162,23 +206,52 @@ class Target extends React.Component {
                 />
               </div>
 
-              <button className="form-input"> Dodaj</button>
+
+              <button className="target-add-button"> Dodaj</button>
             </form>
+          </div>
+        </div>
 
 
-            <h2>Twoje cele:</h2>
-            <div className="blog-">
+
+        <div>
+
+          <div className="target-display-maincontainer">
+            <div className="target-display-title">Twoje cele:</div>
+            <div className="target-display-box">
               {this.displayBlogPost(this.state.posts)}
             </div>
           </div>
 
 
+        </div>
 
 
 
-        </div >
+      </div>
 
-      </div >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     );
 
   }
