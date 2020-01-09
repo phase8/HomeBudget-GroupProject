@@ -5,11 +5,11 @@ import { Redirect } from "react-router";
 import Welcomepage from "../pages/Welcomepage";
 import AccountManagment from "../pages/AccountManagment";
 import NavBar from "../pages/components/NavBar";
-import { welcomepageUrl, accountManagmentUrl, goalsUrl, AddIncomeExpenseUrl } from "../helper/urls";
+import { welcomepageUrl, accountManagmentUrl, goalsUrl, AddIncomeExpenseUrl, historyUrl } from "../helper/urls";
 import PageNotFound from "../pages/PageNotFound";
 import AddIncomeExpense from "../pages/AddIncomeExpense";
 import Target from "../pages/Target";
-
+import History from "../pages/History"
 
 
 
@@ -27,6 +27,7 @@ const UserAppRouter = () => {
         <Route path="/404" component={PageNotFound} />
         <Route path={goalsUrl} component={Target}></Route>
         <Route path={AddIncomeExpenseUrl} component={AddIncomeExpense}></Route>
+        <Route path={historyUrl} component={History}></Route>
         <Redirect from="*" to="/404" />
       </Switch>
     </div>

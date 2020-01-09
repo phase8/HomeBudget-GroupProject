@@ -6,6 +6,7 @@ import {
   goalsUrl,
 } from "../../helper/urls";
 import { checkActiveUrl } from "../../helper/tools";
+import axios from 'axios';
 
 
 export const userpanel = [
@@ -13,8 +14,7 @@ export const userpanel = [
     <div className="statusContainer">
       <div className="currentFinantialStatus">
         <div className="statusDescription">Twoje obecne środki:</div>
-        <div className="cashAmount"></div>
-      </div>
+        <div className="cashAmount"></div></div>
       <div className="controlBox">
         <Link to={goalsUrl} className={`${checkActiveUrl(goalsUrl)} addGoal `}>
           Dodaj cel
@@ -29,7 +29,11 @@ export const userpanel = [
   </div>
 ];
 
+
 class Userpanel extends React.Component {
+
+
+  
   render() {
     return <div className="pageContainer">{userpanel}</div>;
   }

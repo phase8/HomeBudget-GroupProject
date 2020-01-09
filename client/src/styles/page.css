@@ -30,7 +30,8 @@
     border-radius: 15px;
     text-align: justify;
     text-align-last: center;
-    top: 125px;
+    top: 65px;
+    position: absolute;
 }
 .dataContainer{
     height: 80vh;
