@@ -20,7 +20,7 @@ class PageNotFound extends React.Component {
   render() {
     if (this.state.redirect === true) return <Redirect to="/" />;
     return (
-      <div className="ui container middle aligned center aligned grid">
+      <div className="ui container center aligned ">
         <div className="ui negative message">
           <h1 className="ui dividing header">404 Page not found</h1>
           <p>Rewind and try another one</p>

@@ -4,13 +4,9 @@ import { userpanel } from "./components/userpanel.js";
 import { userName } from "../helper/urls";
 import { hasJustLogged } from "../helper/tools"
 import axios from 'axios';
+import Userpanel from "./components/userpanel.js";
 
-const welcomeNotification = [
-  <div className="notification">
-    Cześć {userName}! Miło Cię widzieć ponownie. Zaoszczędź z nami
-    trochę $$$ żeby Ci potem starczyło na waciki.
-  </div>
-];
+
 
 class Welcomepage extends React.Component {
   constructor(props) {
@@ -46,8 +42,11 @@ class Welcomepage extends React.Component {
     if (hasJustLogged) {
     return (
       <div className="pageContainer">
-        {userpanel}
-        {welcomeNotification}
+        <Userpanel />
+        <div className="notification">
+          Cześć {localStorage.getItem("name")}! Miło Cię widzieć ponownie.
+          Zaoszczędź z nami trochę $$$ żeby Ci potem starczyło na waciki.
+        </div>
       </div>
     );
     } else{

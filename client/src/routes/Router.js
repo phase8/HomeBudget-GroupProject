@@ -9,7 +9,6 @@ import AddIncomeExpense from "../pages/AddIncomeExpense";
 import Target from "../pages/Target";
 import History from "../pages/History";
 
-
 const Router = () => {
   return (
     <Switch>
