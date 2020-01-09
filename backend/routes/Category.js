@@ -31,4 +31,10 @@ router.get('/', (req, res) => {
     });
 });
 
+router.delete('/:id', (req, res) => {
+  CategoryModel.findByIdAndRemove({
+    _id: req.params.id
+  }).then(obj => res.send(obj));
+});
+
 module.exports = router;

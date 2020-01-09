@@ -2,13 +2,15 @@ import React from 'react';
 import '../styles/page.css';
 import { Link } from 'react-router-dom';
 import axios from '../api/apiConfig';
+import { categoryAddUrl } from '../helper/urls';
 
 class CategoryExpenseList extends React.Component {
   constructor() {
     super();
     this.state = {
       categories: [],
-      categoryType: 'EXPENSE'
+      categoryType: 'EXPENSE',
+      selectedCategoryId: ''
     };
   }
 
@@ -20,7 +22,6 @@ class CategoryExpenseList extends React.Component {
       method: 'GET'
     })
       .then(res => {
-        console.log(res);
         this.setState({
           categories: res.data
         });
@@ -34,17 +35,56 @@ class CategoryExpenseList extends React.Component {
     this.getCategories(this.state.categoryType);
   }
 
+  onClickHandle(categoryId) {
+    this.setState({
+      selectedCategoryId: categoryId
+    });
+  }
+
+  deleteCategory() {
+    axios({
+      url: '/categories/',
+      data: {
+        _id: this.state.selectedCategoryId
+      },
+      method: 'DELETE'
+    })
+      .then(() => {
+        console.log('Category deleted successfully');
+      })
+      .catch(() => {
+        console.log('Internal server error');
+      });
+  }
+
   render() {
     return (
       <div className='pageContainer'>
-        <div className='statusContainer'>
-          <div className='currentFinantialStatus'>
-            <ul>
-              {this.state.categories.map(category => (
-                <li key={category._id}>{category.name}</li>
-              ))}
-            </ul>
-          </div>
+        <div className='categories-container'>
+          <h2>Kategorie wydatków</h2>
+          <ul>
+            {this.state.categories.map(category => (
+              <li key={category._id}>
+                <button
+                  className='category-button'
+                  onClick={() => this.onClickHandle(category._id)}
+                >
+                  {category.name}
+                </button>
+              </li>
+            ))}
+            <div className='action-buttons'>
+              <button className='category-button-action'>
+                <Link to={categoryAddUrl}>Dodaj kategorię</Link>
+              </button>
+              <button
+                className='category-button-action'
+                onClick={this.deleteCategory}
+              >
+                Usuń kategorię
+              </button>
+            </div>
+          </ul>
         </div>
       </div>
     );
