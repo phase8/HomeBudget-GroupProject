@@ -8,7 +8,7 @@ const Joi = require("joi");
 const { User } = require("../models/user");
 
 router.post("/", async (req, res) => {
-  const { error } = validate(req.body);
+  const { error } = validateAuth(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   let user = await User.findOne({ email: req.body.email });
@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
   res.send({ ..._.pick(user, ["name", "email"]), token });
 });
 
-function validate(req) {
+function validateAuth(req) {
   const schema = {
     email: Joi.string()
       .min(5)

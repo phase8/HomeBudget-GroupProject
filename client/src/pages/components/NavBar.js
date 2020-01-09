@@ -7,7 +7,7 @@ import {
   categoryUrl,
   historyUrl,
   goalsUrl,
-  accountManagmentUrl
+  accountManagementUrl
 } from "../../helper/urls";
 
 class NavBar extends React.Component {
@@ -42,9 +42,9 @@ class NavBar extends React.Component {
           <div className="right item">
             <div className="column">
               <Link
-                to={accountManagmentUrl}
+                to={accountManagementUrl}
                 className={`${checkActiveUrl(
-                  accountManagmentUrl
+                  accountManagementUrl
                 )} ui button teal`}
               >
                 {userName}

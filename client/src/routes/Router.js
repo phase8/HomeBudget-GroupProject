@@ -7,7 +7,7 @@ import UserAppRouter from "./UserAppRouter";
 import { userName } from "../helper/urls";
 import AddIncomeExpense from "../pages/AddIncomeExpense";
 import Target from "../pages/Target";
-
+import History from "../pages/History";
 
 const Router = () => {
   return (
@@ -17,6 +17,7 @@ const Router = () => {
       <Route path="/addincomeExpense" component={AddIncomeExpense}></Route>
       <Route path="/goals" component={Target}></Route>
       <Route path={`/:${userName}`} component={UserAppRouter}></Route>
+      <Route path="/history" component={History}></Route>
     </Switch>
   );
 };
