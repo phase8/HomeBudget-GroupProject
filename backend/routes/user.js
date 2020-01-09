@@ -46,6 +46,31 @@ router.post("/:type", async (req, res) => {
   res.send({ ..._.pick(user, ["name", "email"]), token });
 });
 
+router.delete("/:email", async (req, res) => {
+  let email = req.params.email;
+  let password = req.body.password;
+
+  let { error } = validateAuth({ email: email, password: password });
+  if (error) return res.status(400).send(error.details[0].message);
+
+  let user = await User.findOne({ email: email });
+  if (!user)
+    return res
+      .status(400)
+      .send(
+        "Something went wrong! Looks like your account is a ghost O.o Try again"
+      );
+
+  const validPassword = await bcrypt.compare(password, user.password);
+  if (!validPassword) return res.status(400).send("Invalid password.");
+
+  const done = await User.findByIdAndDelete({ _id: user.id });
+
+  if (!done) return res.status(404).send("Something went wrong! Try again");
+
+  res.send("Account deleted!");
+});
+
 function validateAuth(req) {
   const schema = {
     email: Joi.string()

@@ -21,7 +21,7 @@ class Signin extends React.Component {
   }
 
   updateForm = (name, value) => {
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, errorApiMsg: "" });
   };
 
   onFormSubmit = async event => {

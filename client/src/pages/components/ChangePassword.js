@@ -32,6 +32,7 @@ class ChangePassword extends React.Component {
         errorMsg:
           value !== this.state.confirmPassword ? "Fields aren't the same!" : ""
       });
+    else this.setState({ errorMsg: "" });
   };
 
   onFormSubmit = async event => {
@@ -62,7 +63,6 @@ class ChangePassword extends React.Component {
 
     return (
       <div className="content">
-        <h3 className="ui grey header">Change password</h3>
         <form onSubmit={this.onFormSubmit} className="ui medium form">
           <div className="ui stacked segment">
             <Input

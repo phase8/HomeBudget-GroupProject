@@ -31,6 +31,7 @@ class ChangeName extends React.Component {
         errorMsg:
           value !== this.state.confirmName ? "Fields aren't the same!" : ""
       });
+    else this.setState({ errorMsg: "" });
   };
 
   onFormSubmit = async event => {
@@ -61,7 +62,6 @@ class ChangeName extends React.Component {
 
     return (
       <div className="content">
-        <h3 className="ui grey header">Change user name</h3>
         <form onSubmit={this.onFormSubmit} className="ui medium form">
           <div className="ui stacked segment">
             <Input

@@ -26,30 +26,36 @@ class AccountManagement extends React.Component {
       >
         <div className="ui center aligned twelve wide column card">
           <h1 className="ui  header"> Account Management </h1>
-          <button
-            className="ui fluid large grey button"
-            name="ChangeName"
-            onClick={e => this.checkAction(e)}
-          >
-            Change user name
-          </button>
-          {this.state.ChangeName && <ChangeName />}
-          <button
-            className="ui fluid large grey button"
-            name="ChangePassword"
-            onClick={e => this.checkAction(e)}
-          >
-            Change password
-          </button>
-          {this.state.ChangePassword && <ChangePassword />}
-          <button
-            className="ui fluid large red button"
-            name="DeleteAccount"
-            onClick={e => this.checkAction(e)}
-          >
-            Delete account
-          </button>
-          {this.state.DeleteAccount && <DeleteAccount />}
+          <div className="content">
+            <button
+              className="ui fluid large grey button"
+              name="ChangeName"
+              onClick={e => this.checkAction(e)}
+            >
+              Change user name
+            </button>
+            {this.state.ChangeName && <ChangeName />}
+          </div>
+          <div className="content">
+            <button
+              className="ui fluid large grey button"
+              name="ChangePassword"
+              onClick={e => this.checkAction(e)}
+            >
+              Change password
+            </button>
+            {this.state.ChangePassword && <ChangePassword />}
+          </div>
+          <div className="content">
+            <button
+              className="ui fluid large red button"
+              name="DeleteAccount"
+              onClick={e => this.checkAction(e)}
+            >
+              Delete account
+            </button>
+            {this.state.DeleteAccount && <DeleteAccount />}
+          </div>
         </div>
       </div>
     );
