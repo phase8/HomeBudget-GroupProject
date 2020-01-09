@@ -10,7 +10,8 @@ class CategoryExpenseList extends React.Component {
     this.state = {
       categories: [],
       categoryType: 'EXPENSE',
-      selectedCategoryId: ''
+      selectedCategoryId: '',
+      selectedCategoryName: ''
     };
   }
 
@@ -35,27 +36,31 @@ class CategoryExpenseList extends React.Component {
     this.getCategories(this.state.categoryType);
   }
 
-  onClickHandle(categoryId) {
+  onClickHandle(categoryId, categoryName) {
     this.setState({
-      selectedCategoryId: categoryId
+      selectedCategoryId: categoryId,
+      selectedCategoryName: categoryName
     });
   }
 
-  deleteCategory() {
+  deleteCategory = () => {
     axios({
-      url: '/categories/',
-      data: {
-        _id: this.state.selectedCategoryId // produces Cannot read property 'state' of undefined
-      },
+      url: `/categories/${this.state.selectedCategoryId}`, // produces Cannot read property 'state' of undefined
       method: 'DELETE'
     })
       .then(() => {
-        console.log('Category deleted successfully');
+        this.setState(
+          (this.state.categories = this.state.categories.filter(
+            category => category.name !== this.state.selectedCategoryName
+          ))
+        );
+        console.log(this.state.selectedCategoryName);
+        console.log(this.state.categories);
       })
       .catch(() => {
-        console.log('Internal server error');
+        alert('To delete category first click on it');
       });
-  }
+  };
 
   render() {
     return (
@@ -67,7 +72,9 @@ class CategoryExpenseList extends React.Component {
               <li key={category._id}>
                 <button
                   className='category-button'
-                  onClick={() => this.onClickHandle(category._id)}
+                  onClick={() =>
+                    this.onClickHandle(category._id, category.name)
+                  }
                 >
                   {category.name}
                 </button>
