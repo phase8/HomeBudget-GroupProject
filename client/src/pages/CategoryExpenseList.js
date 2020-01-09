@@ -45,7 +45,7 @@ class CategoryExpenseList extends React.Component {
     axios({
       url: '/categories/',
       data: {
-        _id: this.state.selectedCategoryId
+        _id: this.state.selectedCategoryId // produces Cannot read property 'state' of undefined
       },
       method: 'DELETE'
     })

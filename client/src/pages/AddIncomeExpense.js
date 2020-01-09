@@ -1,19 +1,20 @@
-import React from "react";
-import axios from "axios";
-import "../styles/page.css";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import React from 'react';
+import axios from '../api/apiConfig';
+import '../styles/page.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { Fragment } from 'react';
 
 class AddIncomeExpense extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      operationname: "",
-      amount: "",
-      category: "",
-      operationtype: "",
+      operationname: '',
+      amount: '',
+      category: '',
+      operationtype: '',
       startDate: new Date(),
-      ispernament: "",
+      ispernament: '',
       categories: []
     };
   }
@@ -24,14 +25,19 @@ class AddIncomeExpense extends React.Component {
 
   getCategories = () => {
     axios
-      .get("http://localhost:3001/api/OperationsAndGoals/total")
+      .get('/categories')
       .then(response => {
-        const data = response.data;
-        this.setState({ categories: data });
-        console.log("Data has been received!!");
+        console.log(response);
+        const data = response.data.filter(
+          element => element.type === 'EXPENSE'
+        ); // array of {type: INCOME/EXPENSE, _id:..., name: "nameOfCategory"}
+        this.setState(() => {
+          this.state.categories = data.map(element => element.name); // array of type: [expense1Name, expense2Name, ...]
+        });
+        this.loadCategories();
       })
       .catch(() => {
-        alert("błąd przy pobraniu danych");
+        alert('błąd przy pobraniu danych');
       });
   };
 
@@ -53,7 +59,7 @@ class AddIncomeExpense extends React.Component {
   };
 
   handleDisable = () => {
-    if (this.state.operationtype === "przychód") {
+    if (this.state.operationtype === 'przychód') {
       this.resetCategory();
     } else {
       this.sentDataExpenseIncome();
@@ -63,7 +69,7 @@ class AddIncomeExpense extends React.Component {
   resetCategory = () => {
     this.setState(
       {
-        category: "bez kategorii"
+        category: 'bez kategorii'
       },
       () => this.sentDataExpenseIncome()
     );
@@ -71,18 +77,18 @@ class AddIncomeExpense extends React.Component {
 
   sentDataExpenseIncome = () => {
     if (this.state.amount < 0) {
-      alert("kwota nie może być ujemna");
+      alert('kwota nie może być ujemna');
     } else if (
-      this.state.operationname === "" ||
-      this.state.amount === "" ||
-      this.state.category === "wybierz" ||
-      this.state.operationtype === "wybierz" ||
-      this.state.ispernament === "wybierz" ||
-      this.state.category === "" ||
-      this.state.operationtype === "" ||
-      this.state.ispernament === ""
+      this.state.operationname === '' ||
+      this.state.amount === '' ||
+      this.state.category === 'wybierz' ||
+      this.state.operationtype === 'wybierz' ||
+      this.state.ispernament === 'wybierz' ||
+      this.state.category === '' ||
+      this.state.operationtype === '' ||
+      this.state.ispernament === ''
     ) {
-      alert("Wypełnij wszystkie pola.");
+      alert('Wypełnij wszystkie pola.');
     } else {
       const payload = {
         operationname: this.state.operationname,
@@ -94,119 +100,107 @@ class AddIncomeExpense extends React.Component {
       };
 
       axios({
-        url: "http://localhost:3001/api/OperationsAndGoals/saveincomeexpense",
-        method: "POST",
+        url: 'http://localhost:3001/api/OperationsAndGoals/saveincomeexpense',
+        method: 'POST',
         data: payload
       })
         .then(() => {
-          alert("dane zostały zapisane");
+          alert('dane zostały zapisane');
           this.resetUserInputs();
         })
         .catch(() => {
-          console.log("Internal server error");
+          console.log('Internal server error');
         });
     }
   };
 
   resetUserInputs = () => {
     this.setState({
-      operationname: "",
-      amount: ""
+      operationname: '',
+      amount: ''
+    });
+  };
+
+  onChangeHandle = () => {
+    this.setState({
+      category: document.getElementById('categories').value
+    });
+  };
+
+  loadCategories = () => {
+    let select = document.getElementById('categories');
+    this.state.categories.forEach(element => {
+      let newSelect = document.createElement('option');
+      newSelect.name = element;
+      newSelect.value = element;
+      newSelect.textContent = element;
+      select.appendChild(newSelect);
     });
   };
 
   render() {
     return (
-      <div className="pageContainer">
-        <div className="statusContainer">
-          <div className="currentFinantialStatus">
-            <div className="statusDescription">Dodaj operację</div>
+      <div className='pageContainer'>
+        <div className='statusContainer'>
+          <div className='currentFinantialStatus'>
+            <div className='statusDescription'>Dodaj operację</div>
           </div>
 
           <form onSubmit={this.submit}>
             <label> Wpisz nazwę operacji </label>
-
             <input
-              type="text"
-              name="operationname"
-              placeholder="nazwa operacji"
+              type='text'
+              name='operationname'
+              placeholder='nazwa operacji'
               value={this.state.operationname}
               onChange={this.handleChange}
             />
-
             <label> Wpisz kwotę </label>
-
             <input
-              type="number"
-              placeholder="kwota"
-              name="amount"
+              type='number'
+              placeholder='kwota'
+              name='amount'
               value={this.state.amount}
               onChange={this.handleChange}
             />
-
             <label> Wybierz kategorię wydatków: </label>
 
             <select
-              name="category"
+              id='categories'
+              name='categories'
               value={this.state.category}
-              onChange={this.handleChange}
-            >
-              <option
-                disabled={this.state.operationtype == "przychód" ? true : false}
-                value="wybierz"
-              >
-                {this.state.operationtype == "przychód"
-                  ? "nie dotyczy"
-                  : "wybierz"}
-              </option>
-              {this.state.categories.map(obj => {
-                return (
-                  <option
-                    disabled={
-                      this.state.operationtype == "przychód" ? true : false
-                    }
-                    name="category"
-                    value={obj.total}
-                  >
-                    {obj.total}
-                  </option>
-                );
-              })}
-            </select>
+              onChange={this.onChangeHandle}
+            ></select>
 
             <label>Wybierz typ operacji:</label>
-
             <select
-              name="operationtype"
+              name='operationtype'
               value={this.state.operationtype}
               onChange={this.handleChange}
             >
-              <option value="wybierz">wybierz</option>
-              <option value="przychód">przychód</option>
-              <option value="wydatek">wydatek</option>
+              <option value='wybierz'>wybierz</option>
+              <option value='przychód'>przychód</option>
+              <option value='wydatek'>wydatek</option>
             </select>
-
             <div>
               <label>Wybierz datę operacji: </label>
               <DatePicker
                 selected={this.state.startDate}
                 onChange={this.handleChange2}
-                name="startDate"
-                dateFormat="dd/MM/yyyy"
+                name='startDate'
+                dateFormat='dd/MM/yyyy'
               />
             </div>
-
             <label>Czy operacja ma charakter comiesięczny? </label>
             <select
-              name="ispernament"
+              name='ispernament'
               value={this.state.ispernament}
               onChange={this.handleChange}
             >
-              <option value="wybierz">wybierz</option>
-              <option value="tak">tak</option>
-              <option value="nie">nie</option>
+              <option value='wybierz'>wybierz</option>
+              <option value='tak'>tak</option>
+              <option value='nie'>nie</option>
             </select>
-
             <button>Dodaj</button>
           </form>
         </div>
