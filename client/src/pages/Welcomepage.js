@@ -52,7 +52,7 @@ class Welcomepage extends React.Component {
     } else{
       return (      
       <div className="pageContainer">
-        {userpanel}
+        <Userpanel />
       </div>)
     }
   }
