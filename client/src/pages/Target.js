@@ -3,8 +3,7 @@
 import React from 'react';
 import axios from 'axios';
 import "../styles/page.css";
-import { Link } from "react-router-dom";
-import { Redirect } from "react-router";
+
 
 
 
@@ -14,7 +13,9 @@ class Target extends React.Component {
     title: '',
     body: '',
     posts: [],
-    total: []
+    plus: 0,
+    minus: 0,
+
   };
 
   handleChange = ({ target }) => {
@@ -51,6 +52,7 @@ class Target extends React.Component {
           console.log('Data has been sent to the server');
           this.resetUserInputs();
           this.getBlogPost();
+          this.getTotal();
           alert('Dane zostały zapisane.');
 
         })
@@ -99,11 +101,15 @@ class Target extends React.Component {
     if (!posts.length) return null;
 
 
+
+    let balance = this.state.plus - this.state.minus
+
+
     return posts.map((post, index) => (
       <div key={index} className="target-display-one">
         <div className="target-title-one">{post.title}</div>
         <p className="target-amount-one">{post.body} zł</p>
-        <p className="target-how-much-one">Do realizacji celu pozostało: {post.body - this.state.total < 0 ? 0 : post.body - this.state.total} zł </p>
+        <p className="target-how-much-one">Do realizacji celu pozostało: {balance <= 0 ? post.body : Math.abs(post.body - balance)} zł </p>
 
         <button className="target-remove-button" onClick={this.handleRemove.bind(this, post._id)}>Usuń cel</button>
       </div>
@@ -111,16 +117,19 @@ class Target extends React.Component {
   };
 
   getTotal = () => {
-    axios.get('http://localhost:3001/api/OperationsAndGoals/getBalance')
+
+
+
+    axios.get('http://localhost:3001/api/OperationsAndGoals/getBalancePlus')
       .then((response) => {
         const data = response.data;
 
-        var mTotal = data.reduce(function (prev, cur) {
+        var plus1 = data.reduce(function (prev, cur) {
           return prev + cur.amount;
         }, 0);
-        console.log(mTotal);
 
-        this.setState({ total: mTotal });
+
+        this.setState({ plus: plus1 });
         console.log('Data has been received!!');
 
       })
@@ -129,11 +138,22 @@ class Target extends React.Component {
       });
 
 
+    axios.get('http://localhost:3001/api/OperationsAndGoals/getBalanceMinus')
+      .then((response) => {
+        const data = response.data;
+
+        var minus1 = data.reduce(function (prev, cur) {
+          return prev + cur.amount;
+        }, 0);
 
 
+        this.setState({ minus: minus1 });
+        console.log('Data has been received!!');
 
-
-
+      })
+      .catch(() => {
+        alert('błąd pobierania danych');
+      });
 
   }
 

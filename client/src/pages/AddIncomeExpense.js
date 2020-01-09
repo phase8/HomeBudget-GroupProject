@@ -3,8 +3,7 @@ import axios from 'axios';
 import "../styles/page.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Link } from "react-router-dom";
-import { Redirect } from "react-router";
+
 
 
 
@@ -217,7 +216,7 @@ class AddIncomeExpense extends React.Component {
 
 
               <label className="target-amount-one">
-                Czy operacja ma charakter comiesięczny?  </label>
+                Czy powtarzać operację co tydzień automatycznie?  </label>
               <select className="target-form-input" name="ispernament" value={this.state.ispernament} onChange={this.handleChange}>
                 <option value="wybierz">wybierz</option>
                 <option value="tak">tak</option>
@@ -230,11 +229,11 @@ class AddIncomeExpense extends React.Component {
 
               <select className="target-form-input"
                 name="category" value={this.state.category} onChange={this.handleChange}>
-                <option disabled={this.state.operationtype == "przychód" ? true : false} value="wybierz">{this.state.operationtype == "przychód" ? "nie dotyczy" : "wybierz"}</option>
+                <option disabled={this.state.operationtype === "przychód" ? true : false} value="wybierz">{this.state.operationtype === "przychód" ? "nie dotyczy" : "wybierz"}</option>
                 {
                   this.state.categories.map((obj) => {
 
-                    return <option disabled={this.state.operationtype == "przychód" ? true : false} name="category" value={obj.name}>{obj.name}</option>
+                    return <option disabled={this.state.operationtype === "przychód" ? true : false} name="category" value={obj.name}>{obj.name}</option>
                   })
                 }</select>
 

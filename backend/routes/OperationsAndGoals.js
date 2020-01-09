@@ -35,7 +35,7 @@ router.get('/getCategoriesToAddIncomeExpense', (req, res) => {
     });
 });
 
-router.get('/getBalance', (req, res) => {
+router.get('/getBalancePlus', (req, res) => {
 
   IncomeExpense.find({
       operationtype: "przychód"
@@ -48,6 +48,28 @@ router.get('/getBalance', (req, res) => {
       console.log('error: ', daerrorta);
     });
 });
+
+router.get('/getBalanceMinus', (req, res) => {
+
+  IncomeExpense.find({
+      operationtype: "wydatek"
+    })
+    .then((data) => {
+
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log('error: ', daerrorta);
+    });
+});
+
+
+
+
+
+
+
+
 
 
 
@@ -81,14 +103,19 @@ router.post('/saveincomeexpense', (req) => {
   let ask = data.ispernament
 
   if (ask === "tak") {
+    const NewIncomeExpense = new IncomeExpense(data);
+    NewIncomeExpense.save()
+
     setInterval(function () {
 
-      const NewIncomeExpense = new IncomeExpense(data);
-      NewIncomeExpense.save();
-      console.log("ok")
 
-    }, 20000);
-    console.log("ok")
+      const NewIncomeExpense = new IncomeExpense(data);
+      NewIncomeExpense.save()
+
+
+
+    }, 60480000);
+
   } else {
     const NewIncomeExpense = new IncomeExpense(data);
     NewIncomeExpense.save()
