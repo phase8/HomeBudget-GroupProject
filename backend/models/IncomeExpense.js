@@ -12,6 +12,7 @@ const IncomeExpenseSchema = new Schema({
   operationtype: String,
   ispernament: String,
   userid: String,
+  email: String,
 });
 
 const IncomeExpense = mongoose.model('IncomesExpense', IncomeExpenseSchema);
