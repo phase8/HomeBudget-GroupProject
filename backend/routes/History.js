@@ -15,10 +15,23 @@ router.get('/get', (req, res) => {
         });
 });
 
-router.get('/checkbalance', (req, res) => {
+router.get('/incomes', (req, res) => {
 
-    IncomeExpense.find({})
-        .select({amount: 1, operationtype: 1})
+    IncomeExpense.find({ operationtype: /przychód/ })
+        .select({amount: 1})
+        .then((data) => {
+            console.log('Data: ', data);
+            res.json(data);
+        })
+        .catch((error) => {
+            console.log('error: ', dataerror);
+        });
+})
+
+router.get('/outcomes', (req, res) => {
+
+    IncomeExpense.find({ operationtype: /wydatek/ })
+        .select({amount: 1})
         .then((data) => {
             console.log('Data: ', data);
             res.json(data);

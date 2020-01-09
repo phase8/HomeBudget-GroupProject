@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { AddIncomeExpenseUrl, goalsUrl } from "../../helper/urls";
 import { checkActiveUrl } from "../../helper/tools";
-import axios from 'axios';
 
 
 class Userpanel extends React.Component {
