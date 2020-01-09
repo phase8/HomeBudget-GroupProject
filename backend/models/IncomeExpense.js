@@ -10,9 +10,10 @@ const IncomeExpenseSchema = new Schema({
   },
   category: String,
   operationtype: String,
-  ispernament: String
+  ispernament: String,
+  userid: String,
 });
 
-const IncomeExpense = mongoose.model("IncomesExpense", IncomeExpenseSchema);
+const IncomeExpense = mongoose.model('IncomesExpense', IncomeExpenseSchema);
 
 module.exports = IncomeExpense;

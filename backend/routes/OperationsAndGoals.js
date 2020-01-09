@@ -1,78 +1,144 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const BlogPost = require("../models/blogPost");
-const TotalModel = require("../models/TotalModel");
-const IncomeExpense = require("../models/IncomeExpense");
+const BlogPost = require('../models/blogPost');
+const IncomeExpense = require('../models/IncomeExpense');
+const CategoryModel = require('../models/CategoryModel').CategoryModel;
 
-router.get("/getblogpost", (req, res) => {
+
+
+
+router.get('/getblogpost', (req, res) => {
+
   BlogPost.find({})
-    .then(data => {
-      console.log("Data: ", data);
+    .then((data) => {
+
       res.json(data);
     })
-    .catch(error => {
-      console.log("error: ", daerrorta);
+    .catch((error) => {
+      console.log('error: ', daerrorta);
     });
 });
 
-router.get("/total", (req, res) => {
-  TotalModel.find({})
+router.get('/getCategoriesToAddIncomeExpense', (req, res) => {
+
+
+  CategoryModel.find({
+      type: "EXPENSE"
+    })
     .then(data => {
-      console.log("Data: ", data);
       res.json(data);
     })
     .catch(error => {
-      console.log("error: ", daerrorta);
+      res.status(500).json({
+        error: 'An error has occured while fetching categories'
+      });
     });
 });
 
-router.post("/savetarget", (req, res) => {
+router.get('/getBalancePlus', (req, res) => {
+
+  IncomeExpense.find({
+      operationtype: "przychód"
+    })
+    .then((data) => {
+
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log('error: ', daerrorta);
+    });
+});
+
+router.get('/getBalanceMinus', (req, res) => {
+
+  IncomeExpense.find({
+      operationtype: "wydatek"
+    })
+    .then((data) => {
+
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log('error: ', daerrorta);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+router.post('/savetarget', (req, res) => {
   const data = req.body;
 
   const newBlogPost = new BlogPost(data);
 
-  newBlogPost.save(error => {
+  newBlogPost.save((error) => {
     if (error) {
       res.status(500).json({
-        msg: "Sorry, internal server errors"
+        msg: 'Sorry, internal server errors'
       });
       return;
     }
     return res.json({
-      msg: "Your data has been saved!!!!!!"
+      msg: 'Your data has been saved!!!!!!'
     });
   });
 });
 
-router.post("/saveincomeexpense", (req, res) => {
+
+
+
+
+
+router.post('/saveincomeexpense', (req) => {
+
   const data = req.body;
-  const NewIncomeExpense = new IncomeExpense(data);
 
-  NewIncomeExpense.save(error => {
-    if (error) {
-      res.status(500).json({
-        msg: "Sorry, internal server errors"
-      });
-      return;
+  let ask = data.ispernament
+
+  if (ask === "tak") {
+    const NewIncomeExpense = new IncomeExpense(data);
+    NewIncomeExpense.save()
+
+    setInterval(function () {
+
+
+      const NewIncomeExpense = new IncomeExpense(data);
+      NewIncomeExpense.save()
+
+
+
+    }, 60480000);
+
+  } else {
+    const NewIncomeExpense = new IncomeExpense(data);
+    NewIncomeExpense.save()
+  }
+
+
+})
+
+
+
+
+
+
+router.delete("/removetarget", function (req, res) {
+  BlogPost.findOneAndRemove({
+    _id: req.body.id
+  }, req.body, function (err, data) {
+    if (!err) {
+      console.log("Deleted");
     }
-    return res.json({
-      msg: "Your data has been saved!!!!!!"
-    });
   });
 });
 
-router.delete("/removetarget", function(req, res) {
-  BlogPost.findOneAndRemove(
-    {
-      _id: req.body.id
-    },
-    req.body,
-    function(err, data) {
-      if (!err) {
-        console.log("Deleted");
-      }
-    }
-  );
-});
+
 
 module.exports = router;

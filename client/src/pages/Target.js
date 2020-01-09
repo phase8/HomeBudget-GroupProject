@@ -1,12 +1,21 @@
-import React from "react";
-import axios from "axios";
+
+
+import React from 'react';
+import axios from 'axios';
 import "../styles/page.css";
+
+
+
+
+
 class Target extends React.Component {
   state = {
-    title: "",
-    body: "",
+    title: '',
+    body: '',
     posts: [],
-    total: 0
+    plus: 0,
+    minus: 0,
+
   };
 
   handleChange = ({ target }) => {
@@ -14,118 +23,189 @@ class Target extends React.Component {
     this.setState({ [name]: value });
   };
 
-  submit = event => {
+
+  submit = (event) => {
     event.preventDefault();
+
+
+    if (this.state.body < 0) {
+      alert("kwota nie może być ujemna");
+    }
+
+
+
     if (this.state.title === "" || this.state.body === "") {
       alert("Wypełnij wszystkie pola.");
     } else {
+
       const payload = {
         title: this.state.title,
         body: this.state.body
       };
 
       axios({
-        url: "http://localhost:3001/api/OperationsAndGoals/savetarget",
-        method: "POST",
+        url: 'http://localhost:3001/api/OperationsAndGoals/savetarget',
+        method: 'POST',
         data: payload
       })
         .then(() => {
-          console.log("Data has been sent to the server");
+          console.log('Data has been sent to the server');
           this.resetUserInputs();
           this.getBlogPost();
+          this.getTotal();
+          alert('Dane zostały zapisane.');
+
         })
         .catch(() => {
-          console.log("Internal server error");
+          console.log('Internal server error');
         });
-    }
-  };
+
+
+    };
+  }
 
   resetUserInputs = () => {
     this.setState({
-      title: "",
-      body: ""
+      title: '',
+      body: ''
     });
   };
+
+
+
 
   componentDidMount = () => {
     this.getBlogPost();
     this.getTotal();
-  };
+
+
+  }
+
+
 
   getBlogPost = () => {
-    axios
-      .get("http://localhost:3001/api/OperationsAndGoals/getblogpost")
-      .then(response => {
+    axios.get('http://localhost:3001/api/OperationsAndGoals/getblogpost')
+      .then((response) => {
+
         const data = response.data;
         this.setState({ posts: data });
-        console.log("Data has been received!!");
+        console.log('Data has been received!!');
       })
       .catch(() => {
-        alert("błąd przy pobraniu danych");
+        alert('błąd przy pobraniu danych');
       });
-  };
+  }
 
-  displayBlogPost = posts => {
+  displayBlogPost = (posts) => {
+
     if (!posts.length) return null;
 
-    return posts.map((post, index) => (
-      <div key={index} className="blog-post__display">
-        <h3>{post.title}</h3>
-        <p>{post.body} zł</p>
-        <p>
-          Do realizacji celu pozostało:{" "}
-          {post.body - this.state.total < 0 ? 0 : post.body - this.state.total}{" "}
-          zł{" "}
-        </p>
 
-        <button onClick={this.handleRemove.bind(this, post._id)}>
-          Usuń cel
-        </button>
+
+    let balance = this.state.plus - this.state.minus
+
+
+    return posts.map((post, index) => (
+      <div key={index} className="target-display-one">
+        <div className="target-title-one">{post.title}</div>
+        <p className="target-amount-one">{post.body} zł</p>
+        <p className="target-how-much-one">Do realizacji celu pozostało: {balance <= 0 ? post.body : Math.abs(post.body - balance)} zł </p>
+
+        <button className="target-remove-button" onClick={this.handleRemove.bind(this, post._id)}>Usuń cel</button>
       </div>
     ));
   };
 
   getTotal = () => {
-    axios
-      .get("http://localhost:3001/api/OperationsAndGoals/total")
-      .then(response => {
+
+
+
+    axios.get('http://localhost:3001/api/OperationsAndGoals/getBalancePlus')
+      .then((response) => {
         const data = response.data;
-        console.log(data);
-        this.setState({ total: data[0].total });
-        console.log("Data has been received!!");
+
+        var plus1 = data.reduce(function (prev, cur) {
+          return prev + cur.amount;
+        }, 0);
+
+
+        this.setState({ plus: plus1 });
+        console.log('Data has been received!!');
+
       })
       .catch(() => {
-        alert("błąd pobierania danych");
+        alert('błąd pobierania danych');
       });
-  };
 
-  handleRemove = id => {
-    axios
-      .delete("http://localhost:3001/api/OperationsAndGoals/removetarget", {
-        data: { id: id }
+
+    axios.get('http://localhost:3001/api/OperationsAndGoals/getBalanceMinus')
+      .then((response) => {
+        const data = response.data;
+
+        var minus1 = data.reduce(function (prev, cur) {
+          return prev + cur.amount;
+        }, 0);
+
+
+        this.setState({ minus: minus1 });
+        console.log('Data has been received!!');
+
       })
-      .then(response => {
-        console.log(response.data);
+      .catch(() => {
+        alert('błąd pobierania danych');
       });
 
-    setTimeout(function() {
-      window.location.reload();
-    }, 1000);
-  };
+  }
+
+
+
+
+
+  handleRemove = (id) => {
+
+    axios.delete('http://localhost:3001/api/OperationsAndGoals/removetarget', { data: { id: id } })
+    setTimeout(function () { window.location.reload(); }, 1000)
+
+  }
+
+
+
+
+
+
+
+
+
 
   render() {
-    console.log("State: ", this.state);
+
+
     return (
-      <div className="pageContainer">
-        <div className="statusContainer">
-          <div className="currentFinantialStatus">
-            <div className="statusDescription">Dodaj cel finansowy</div>
+
+
+
+
+      <div className="target-pageContainer">
+        <div className="target-mainbox">
+
+
+
+
+          <div className="target-title-container">
+            <div className="target-box">
+              <div className="target-title">Dodaj cel finansowy</div>
+            </div>
           </div>
 
-          <div>
-            <form onSubmit={this.submit}>
-              <div className="form-input">
+
+
+
+          <div className="target-form-container">
+            <form className="target-form" onSubmit={this.submit}>
+
+              <div className="target-inputbox">
                 <input
+                  className="target-form-input"
                   type="text"
                   name="title"
                   placeholder="nazwa celu"
@@ -133,8 +213,11 @@ class Target extends React.Component {
                   onChange={this.handleChange}
                 />
               </div>
-              <div className="form-input">
-                <input
+
+
+
+              <div className="target-inputbox">
+                <input className="target-form-input"
                   type="number"
                   placeholder="kwota"
                   name="body"
@@ -143,18 +226,56 @@ class Target extends React.Component {
                 />
               </div>
 
-              <button className="form-input"> Dodaj</button>
-            </form>
 
-            <h2>Twoje cele:</h2>
-            <div className="blog-">
+              <button className="target-add-button"> Dodaj</button>
+            </form>
+          </div>
+        </div>
+
+
+
+        <div>
+
+          <div className="target-display-maincontainer">
+            <div className="target-display-title">Twoje cele:</div>
+            <div className="target-display-box">
               {this.displayBlogPost(this.state.posts)}
             </div>
           </div>
+
+
         </div>
+
+
+
       </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     );
+
   }
+
 }
 
 export default Target;

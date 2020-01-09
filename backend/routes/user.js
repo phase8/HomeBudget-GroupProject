@@ -7,24 +7,31 @@ const config = require("config");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 
-const { User } = require("../models/user");
+const {
+  User
+} = require("../models/user");
 
 router.post("/:type", async (req, res) => {
   let type = req.params.type;
   let current = req.body.user;
 
   {
-    let { error } = validateAuth(current);
+    let {
+      error
+    } = validateAuth(current);
     if (error) return res.status(400).send(error.details[0].message);
-  }
-  {
-    let { error } = validateChange(type, {
+  } {
+    let {
+      error
+    } = validateChange(type, {
       [type]: req.body[type]
     });
     if (error) return res.status(400).send(error.details[0].message);
   }
 
-  let user = await User.findOne({ email: current.email });
+  let user = await User.findOne({
+    email: current.email
+  });
   if (!user)
     return res
       .status(400)
@@ -39,11 +46,52 @@ router.post("/:type", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     req.body[type] = await bcrypt.hash(req.body.password, salt);
   }
-  await user.update({ [type]: req.body[type] });
+  await user.update({
+    [type]: req.body[type]
+  });
   const token = user.generateToken();
 
-  user = await User.findOne({ _id: user.id });
-  res.send({ ..._.pick(user, ["name", "email"]), token });
+  user = await User.findOne({
+    _id: user.id
+  });
+  res.send({
+    ..._.pick(user, ["name", "email"]),
+    token
+  });
+});
+
+router.delete("/:email", async (req, res) => {
+  let email = req.params.email;
+  let password = req.body.password;
+
+  let {
+    error
+  } = validateAuth({
+    email: email,
+    password: password
+  });
+  if (error) return res.status(400).send(error.details[0].message);
+
+  let user = await User.findOne({
+    email: email
+  });
+  if (!user)
+    return res
+      .status(400)
+      .send(
+        "Something went wrong! Looks like your account is a ghost O.o Try again"
+      );
+
+  const validPassword = await bcrypt.compare(password, user.password);
+  if (!validPassword) return res.status(400).send("Invalid password.");
+
+  const done = await User.findByIdAndDelete({
+    _id: user.id
+  });
+
+  if (!done) return res.status(404).send("Something went wrong! Try again");
+
+  res.send("Account deleted!");
 });
 
 router.delete("/:email", async (req, res) => {

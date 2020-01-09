@@ -1,29 +1,32 @@
 .pageContainer {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: column;
-  margin: 0px;
-  min-width: 100vw;
-  min-height: 100vh;
-  background-color: rgb(182, 213, 216);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    margin: 0px;
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: rgb(182, 213, 216);
 }
+
 .controls {
-  top: 0px;
-  width: 100vw;
-  height: 125px;
-  background-color: rgb(166, 180, 210);
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+    top: 0px;
+    width: 100vw;
+    height: 125px;
+    background-color: rgb(166, 180, 210);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
+
 .controlButton {
-  height: 50px;
-  background-color: rgb(180, 181, 194);
-  padding: 15px;
-  font-size: 30px;
+    height: 50px;
+    background-color: rgb(180, 181, 194);
+    padding: 15px;
+    font-size: 30px;
 }
-.notification{
+
+.notification {
     width: 50vw;
     background-color: rgb(80, 170, 166);
     padding: 15px;
@@ -33,93 +36,344 @@
     top: 65px;
     position: absolute;
 }
+
 .dataContainer {
-  height: 80vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 125px;
+    height: 80vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 125px;
 }
+
 .statusContainer {
-  height: 350px;
-  width: 60vw;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
+    height: 350px;
+    width: 60vw;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
+
 .currentFinantialStatus {
-  width: 60vw;
-  height: 100px;
+    width: 60vw;
+    height: 100px;
 }
+
 .statusDescription {
-  background-color: rgb(80, 170, 166);
+    background-color: rgb(80, 170, 166);
 }
+
 .cashAmount {
-  background-color: rgb(34, 172, 213);
+    background-color: rgb(34, 172, 213);
 }
+
 .statusDescription,
 .cashAmount {
-  width: 100%;
-  height: 50px;
+    width: 100%;
+    height: 50px;
 }
+
 .statusDescription,
 .cashAmount,
 .addCash,
 .addGoal {
-  text-align: center;
-  font-size: 36px;
-  padding: 15px;
+    text-align: center;
+    font-size: 36px;
+    padding: 15px;
 }
+
 .statusDescription--button {
-  color: #000;
-  display: block;
-  margin: 20px;
+    color: #000;
+    display: block;
+    margin: 20px;
 }
+
 .controlBox {
-  width: 60vw;
-  height: 150px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+    width: 60vw;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
+
 .addCash,
 .addGoal {
-  width: 100%;
-  height: 50px;
-  background-color: rgb(80, 170, 166);
-  text-align: center;
+    width: 100%;
+    height: 50px;
+    background-color: rgb(80, 170, 166);
+    text-align: center;
 }
 
 /* CATEGORIES CSS */
 
 .category-input {
-  text-align: center;
-  font-size: 24px;
-  padding: 15px;
-  display: inline-block;
+    text-align: center;
+    font-size: 24px;
+    padding: 15px;
+    display: inline-block;
 }
 
 .category-button {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  padding: 10px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding: 10px;
 }
 
 .categories-container {
-  display: flex;
-  flex-flow: column wrap;
+    display: flex;
+    flex-flow: column wrap;
 }
 
 .category-button-action {
-  display: block;
-  width: 150px;
-  padding: 10px;
-  margin-top: 20px;
+    display: block;
+    width: 150px;
+    padding: 10px;
+    margin-top: 20px;
 }
 
 .action-buttons {
-  display: flex;
+    display: flex;
+}
+
+/* Target.js  */
+
+
+
+.target-pageContainer {
+    top: 65px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    margin: 0px;
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: rgb(182, 213, 216);
+    width: 100vh;
+
+
+}
+
+
+.target-mainbox {
+    top: 0px;
+    position: absolute;
+
+    width: 60vw;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+
+
+
+
+
+.target-title-container {
+
+    top: 120px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+    height: 50px;
+    background-color: rgb(80, 170, 166);
+}
+
+.target-box {
+    width: 60vw;
+    height: 50px;
+    background-color: rgb(80, 170, 166);
+}
+
+.target-title {
+    width: 60vw;
+    background-color: rgb(80, 170, 166);
+    height: 50px;
+    text-align: center;
+    font-size: 36px;
+    padding: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.target-form-container {
+    top: 200px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+    height: 150px;
+}
+
+
+.target-form {
+    width: 100%;
+    height: 50px;
+    background-color: darkgray
+}
+
+
+.target-inputbox {
+    width: 100%;
+    height: 50px;
+    background-color: blue
+}
+
+.target-form-input {
+    width: 100%;
+    height: 50px;
+    background-color: ghostwhite;
+    text-align: center;
+    outline: none;
+}
+
+
+.target-add-button {
+    width: 100%;
+    height: 50px;
+    background-color: rgb(80, 170, 166);
+    text-align: center;
+    font-size: 17px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+
+
+
+.target-display-maincontainer {
+    left: 0px;
+    top: 450px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    margin: 0px;
+    padding: 0px;
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: rgb(182, 213, 216);
+    width: 100%;
+}
+
+.target-display-title {
+    top: 0px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+    background-color: rgb(80, 170, 166);
+    height: 50px;
+    text-align: center;
+    font-size: 36px;
+    padding: 15px;
+}
+
+
+
+.target-display-box {
+    top: 50px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+}
+
+.target-display-one {
+    width: 100%;
+    background-color: rgb(182, 213, 216);
+    margin-bottom: 20px;
+}
+
+.target-title-one {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgb(34, 172, 213);
+    font-size: 17px;
+}
+
+.target-amount-one {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    width: 100%;
+    height: 50px;
+    font-size: 17px;
+    background-color: rgb(34, 172, 213);
+}
+
+
+.target-how-much-one {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    width: 100%;
+    height: 50px;
+    font-size: 17px;
+    background-color: rgb(34, 172, 213);
+}
+
+.target-remove-button {
+    width: 100%;
+    height: 50px;
+    background-color: rgb(80, 170, 166);
+    text-align: center;
+    font-size: 17px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+
+
+
+/* AddIncomeExpense.js  */
+
+
+.date-picker-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+    width: 100%;
+    height: 50px;
+    font-size: 17px;
+    background-color: rgb(34, 172, 213);
+}
+
+
+.AddIncomeExpense-pageContainer {
+    top: 65px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    margin: 0px;
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: rgb(182, 213, 216);
+    width: 100vh;
+    height: 1100px;
 }
