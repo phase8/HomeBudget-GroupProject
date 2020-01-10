@@ -15,19 +15,17 @@ let email = localStorage.getItem("email")
 
 
 class Welcomepage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      operationname: "",
-      amount: "",
-      category: "",
-      operationtype: "",
-      startDate: new Date(),
-      ispernament: "",
-      categories: [],
-      email: "",
-    };
-  }
+  state = {
+    operationname: "",
+    operations: [],
+    amount: "",
+    category: "",
+    operationtype: "",
+    startDate: new Date(),
+    ispernament: "",
+    email: "",
+    ballance: Number,
+  };
 
   setEmail = () => this.setState({
     email: email
@@ -41,7 +39,6 @@ class Welcomepage extends React.Component {
         }})
       .then(response => {
         const data = response.data;
-        this.setState({ posts: data });
         console.log("przychody wsysły się");
         income = arrSum(data.map(({ amount }) => amount));
         console.log(income);
@@ -56,20 +53,25 @@ class Welcomepage extends React.Component {
         }})
       .then(response => {
         const data = response.data;
-        this.setState({ posts: data });
         console.log("wydatki wsysły się");
         outcome = arrSum(data.map(({ amount }) => amount));
         console.log(outcome);
         ballance = income - outcome;
         console.log(ballance);
+        this.setState({ ballance: ballance})
       })
       .catch(() => {
         console.error("I dupa");
       });
+    return ballance
   };
 
+  displayBallance = (ballance) => {
+    return ballance
+  }
+
   componentDidMount = () => {
-    this.getBallance();
+    this.getBallance()
     this.setEmail();
   };
 
@@ -81,7 +83,7 @@ class Welcomepage extends React.Component {
             <div className="statusContainer">
               <div className="currentFinantialStatus">
                 <div className="statusDescription">Twoje obecne środki:</div>
-                <div className="cashAmount">{ballance}</div>
+                <div className="cashAmount">{this.displayBallance(this.state.ballance)} zł</div>
               </div>
               <div className="controlBox">
                 <Link
@@ -113,7 +115,7 @@ class Welcomepage extends React.Component {
               <div className="statusContainer">
                 <div className="currentFinantialStatus">
                   <div className="statusDescription">Twoje obecne środki:</div>
-                  <div className="cashAmount">{ballance}</div>
+                  <div className="cashAmount">{this.displayBallance(this.state.ballance)} zł</div>
                 </div>
                 <div className="controlBox">
                   <Link

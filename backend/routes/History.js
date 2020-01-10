@@ -9,6 +9,7 @@ router.get("/get", (req, res) => {
   // i czy z punktu widzenia security dawanie requestów po nieposolonym mailu jest OK? 
   email = req.originalUrl.slice(23);
   IncomeExpense.find({email: email})
+    .sort({ date: 'asc'})
     .then(data => {
       console.log("Data: ", data);
       res.json(data);

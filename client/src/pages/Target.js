@@ -69,7 +69,7 @@ class Target extends React.Component {
       .then((response) => {
         const data = response.data;
         this.setState({ posts: data });
-
+        console.log(this.state)
       })
       .catch(() => {
         alert('błąd przy pobraniu danych');
