@@ -3,11 +3,10 @@ import axios from 'axios';
 import "../styles/page.css";
 let email = localStorage.getItem("email")
 
-
 class Target extends React.Component {
   state = {
     title: '',
-    body: '',
+    body: 0,
     posts: [],
     plus: 0,
     minus: 0,
@@ -21,6 +20,7 @@ class Target extends React.Component {
 
   submit = (event) => {
     event.preventDefault();
+
     if (this.state.body < 0) {
       alert("kwota nie może być ujemna");
     }
@@ -30,7 +30,7 @@ class Target extends React.Component {
       const payload = {
         title: this.state.title,
         body: this.state.body,
-        email: this.state.email,
+        userid: this.state.email,
       };
       axios({
         url: 'http://localhost:3001/api/OperationsAndGoals/savetarget',
@@ -43,7 +43,6 @@ class Target extends React.Component {
           this.getTotal();
           alert('Dane zostały zapisane.');
         })
-
     };
   }
 
@@ -57,6 +56,31 @@ class Target extends React.Component {
   setEmail = () => this.setState({
     email: email
   });
+
+  checkMoney = (post, balance) => {
+    if (balance === 0) {
+      let p = post
+      return p
+    }
+    else if (post === 0) {
+      let b = balance
+      let p = post
+      return 0
+    }
+    else if (balance < 0) {
+      let b = balance
+      let p = post
+      return Math.abs(b) + p
+    }
+    else if (balance > 0 & post < balance) {
+      return 0
+    }
+    else {
+      let b = balance
+      let p = post
+      return p - b
+    }
+  }
 
   componentDidMount = () => {
     this.getBlogPost();
@@ -78,11 +102,12 @@ class Target extends React.Component {
   displayBlogPost = (posts) => {
     if (!posts.length) return null;
     let balance = this.state.plus - this.state.minus
+
     return posts.map((post, index) => (
       <div key={index} className="target-display-one">
         <div className="target-title-one">{post.title}</div>
         <p className="target-amount-one">{post.body} zł</p>
-        <p className="target-how-much-one">Do realizacji celu pozostało: {balance <= 0 ? post.body : Math.abs(post.body - balance)} zł </p>
+        <p className="target-how-much-one">Do realizacji celu pozostało: {this.checkMoney(post.body, balance)} zł </p>
         <button className="target-remove-button" onClick={this.handleRemove.bind(this, post._id)}>Usuń cel</button>
       </div>
     ));
