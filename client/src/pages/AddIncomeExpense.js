@@ -10,7 +10,7 @@ class AddIncomeExpense extends React.Component {
     super(props);
     this.state = {
       operationname: '',
-      amount: '',
+      amount: 0,
       category: '',
       operationtype: '',
       startDate: new Date(),
@@ -46,8 +46,6 @@ class AddIncomeExpense extends React.Component {
       startDate: date
     });
   };
-
-
 
   submit = (event) => {
     event.preventDefault();
@@ -92,7 +90,7 @@ class AddIncomeExpense extends React.Component {
         category: this.state.category,
         operationtype: this.state.operationtype,
         ispernament: this.state.ispernament,
-        email: this.state.email,
+        userid: this.state.email,
       };
       axios({
         url: 'http://localhost:3001/api/OperationsAndGoals/saveincomeexpense',
