@@ -7,23 +7,18 @@ const config = require("config");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 
-const {
-  User
-} = require("../models/user");
+const { User } = require("../models/user");
 
 router.post("/:type", async (req, res) => {
   let type = req.params.type;
   let current = req.body.user;
 
   {
-    let {
-      error
-    } = validateAuth(current);
+    let { error } = validateAuth(current);
     if (error) return res.status(400).send(error.details[0].message);
-  } {
-    let {
-      error
-    } = validateChange(type, {
+  }
+  {
+    let { error } = validateChange(type, {
       [type]: req.body[type]
     });
     if (error) return res.status(400).send(error.details[0].message);
@@ -64,9 +59,7 @@ router.delete("/:email", async (req, res) => {
   let email = req.params.email;
   let password = req.body.password;
 
-  let {
-    error
-  } = validateAuth({
+  let { error } = validateAuth({
     email: email,
     password: password
   });

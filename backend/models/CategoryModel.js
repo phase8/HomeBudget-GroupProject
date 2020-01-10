@@ -7,6 +7,7 @@ const types = {
 
 const Schema = mongoose.Schema;
 const CategorySchema = new Schema({
+  userid: String,
   name: String,
   type: {
     type: String,

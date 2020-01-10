@@ -9,11 +9,14 @@ const categoryTypes = {
 };
 
 class CategoryAdd extends React.Component {
-  state = {
-    name: "",
-    type: categoryTypes.INCOME
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      type: categoryTypes.INCOME,
+      email: localStorage.getItem("email")
+    };
+  }
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
@@ -27,6 +30,7 @@ class CategoryAdd extends React.Component {
     }
 
     const payload = {
+      userid: this.state.email,
       name: this.state.name,
       type: this.state.type
     };

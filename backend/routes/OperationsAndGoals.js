@@ -1,133 +1,85 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const BlogPost = require('../models/blogPost');
-const IncomeExpense = require('../models/IncomeExpense');
-const CategoryModel = require('../models/CategoryModel').CategoryModel;
+const BlogPost = require("../models/blogPost");
+const IncomeExpense = require("../models/IncomeExpense");
+const CategoryModel = require("../models/CategoryModel").CategoryModel;
 
-
-router.get('/getblogpost', (req, res) => {
-
-  BlogPost.find({})
-    .then((data) => {
-
-      res.json(data);
-    })
+router.get("/getblogpost", (req, res) => {
+  let email = req.query.email;
+  BlogPost.find({ userid: email }).then(data => {
+    res.json(data);
+  });
 });
 
-router.get('/getCategoriesToAddIncomeExpense', (req, res) => {
-
-
+router.get("/getCategoriesToAddIncomeExpense", (req, res) => {
   CategoryModel.find({
-      type: "EXPENSE"
-    })
-    .then(data => {
-      res.json(data);
-    })
+    type: "EXPENSE"
+  }).then(data => {
+    res.json(data);
+  });
 });
 
-router.get('/getBalancePlus', (req, res) => {
-
-  IncomeExpense.find({
-      operationtype: "przychód"
-    })
-    .then((data) => {
-
+router.get("/getBalancePlus", (req, res) => {
+  let email = req.query.email;
+  IncomeExpense.find({ userid: email, operationtype: /przychód/ }).then(
+    data => {
       res.json(data);
-    })
+    }
+  );
 });
 
-router.get('/getBalanceMinus', (req, res) => {
-
-  IncomeExpense.find({
-      operationtype: "wydatek"
-    })
-    .then((data) => {
-
-      res.json(data);
-    })
+router.get("/getBalanceMinus", (req, res) => {
+  let email = req.query.email;
+  IncomeExpense.find({ userid: email, operationtype: /wydatek/ }).then(data => {
+    res.json(data);
+  });
 });
 
-
-
-
-
-
-
-
-
-
-
-router.post('/savetarget', (req, res) => {
+router.post("/savetarget", (req, res) => {
   const data = req.body;
 
   const newBlogPost = new BlogPost(data);
 
-  newBlogPost.save((error) => {
+  newBlogPost.save(error => {
     if (error) {
-      res.status(500).json({
-
-      });
+      res.status(500).json({});
       return;
     }
-    return res.json({
-
-    });
+    return res.json({});
   });
 });
 
-
-
-
-
-
-router.post('/saveincomeexpense', (req) => {
-
+router.post("/saveincomeexpense", req => {
   const data = req.body;
 
-  let ask = data.ispernament
+  let ask = data.ispernament;
 
   if (ask === "tak") {
     const NewIncomeExpense = new IncomeExpense(data);
-    NewIncomeExpense.save()
+    NewIncomeExpense.save();
 
-    setInterval(function () {
-
-
+    setInterval(function() {
       const NewIncomeExpense = new IncomeExpense(data);
-      NewIncomeExpense.save()
-
-
-
+      NewIncomeExpense.save();
     }, 60480000);
-
   } else {
     const NewIncomeExpense = new IncomeExpense(data);
-    NewIncomeExpense.save()
+    NewIncomeExpense.save();
   }
+});
 
-
-})
-
-
-
-
-
-
-router.delete("/removetarget", function (req, res) {
-    BlogPost.findOneAndRemove({
+router.delete("/removetarget", function(req, res) {
+  BlogPost.findOneAndRemove(
+    {
       _id: req.body.id
-    }, req.body, function (err, data) {
+    },
+    req.body,
+    function(err, data) {
       if (!err) {
         console.log("");
       }
-    });
-
-
-  }
-
-
-);
-
-
+    }
+  );
+});
 
 module.exports = router;

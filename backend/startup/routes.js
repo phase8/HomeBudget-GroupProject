@@ -8,7 +8,7 @@ const OperationsAndGoals = require("../routes/OperationsAndGoals");
 const Category = require("../routes/Category");
 const History = require("../routes/History");
 
-module.exports = function (app) {
+module.exports = function(app) {
   app.use(cors());
   app.use(express.json());
   app.use("/api/user", user);

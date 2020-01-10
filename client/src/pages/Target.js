@@ -1,16 +1,15 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 import "../styles/page.css";
-let email = localStorage.getItem("email")
 
 class Target extends React.Component {
   state = {
-    title: '',
+    title: "",
     body: 0,
     posts: [],
     plus: 0,
     minus: 0,
-    email: "",
+    email: localStorage.getItem("email")
   };
 
   handleChange = ({ target }) => {
@@ -18,7 +17,7 @@ class Target extends React.Component {
     this.setState({ [name]: value });
   };
 
-  submit = (event) => {
+  submit = event => {
     event.preventDefault();
 
     if (this.state.body < 0) {
@@ -30,120 +29,120 @@ class Target extends React.Component {
       const payload = {
         title: this.state.title,
         body: this.state.body,
-        userid: this.state.email,
+        userid: this.state.email
       };
       axios({
-        url: 'http://localhost:3001/api/OperationsAndGoals/savetarget',
-        method: 'POST',
+        url: "http://localhost:3001/api/OperationsAndGoals/savetarget",
+        method: "POST",
         data: payload
-      })
-        .then(() => {
-          this.resetUserInputs();
-          this.getBlogPost();
-          this.getTotal();
-          alert('Dane zostały zapisane.');
-        })
-    };
-  }
+      }).then(() => {
+        this.resetUserInputs();
+        this.getBlogPost();
+        this.getTotal();
+        alert("Dane zostały zapisane.");
+      });
+    }
+  };
 
   resetUserInputs = () => {
     this.setState({
-      title: '',
-      body: ''
+      title: "",
+      body: ""
     });
   };
 
-  setEmail = () => this.setState({
-    email: email
-  });
-
   checkMoney = (post, balance) => {
     if (balance === 0) {
-      let p = post
-      return p
+      return post;
+    } else if (post === 0) {
+      return 0;
+    } else if (balance < 0) {
+      return Math.abs(balance) + post;
+    } else if ((balance > 0) & (post < balance)) {
+      return 0;
+    } else {
+      return post - balance;
     }
-    else if (post === 0) {
-      let b = balance
-      let p = post
-      return 0
-    }
-    else if (balance < 0) {
-      let b = balance
-      let p = post
-      return Math.abs(b) + p
-    }
-    else if (balance > 0 & post < balance) {
-      return 0
-    }
-    else {
-      let b = balance
-      let p = post
-      return p - b
-    }
-  }
+  };
 
   componentDidMount = () => {
     this.getBlogPost();
     this.getTotal();
-    this.setEmail()
-  }
+  };
 
   getBlogPost = () => {
-    axios.get('http://localhost:3001/api/OperationsAndGoals/getblogpost')
-      .then((response) => {
+    axios
+      .get("http://localhost:3001/api/OperationsAndGoals/getblogpost", {
+        params: { email: this.state.email }
+      })
+      .then(response => {
         const data = response.data;
         this.setState({ posts: data });
-        console.log(this.state)
       })
       .catch(() => {
-        alert('błąd przy pobraniu danych');
+        alert("błąd przy pobraniu danych");
       });
-  }
-  displayBlogPost = (posts) => {
+  };
+  displayBlogPost = posts => {
     if (!posts.length) return null;
-    let balance = this.state.plus - this.state.minus
+    let balance = this.state.plus - this.state.minus;
 
     return posts.map((post, index) => (
       <div key={index} className="target-display-one">
         <div className="target-title-one">{post.title}</div>
         <p className="target-amount-one">{post.body} zł</p>
-        <p className="target-how-much-one">Do realizacji celu pozostało: {this.checkMoney(post.body, balance)} zł </p>
-        <button className="target-remove-button" onClick={this.handleRemove.bind(this, post._id)}>Usuń cel</button>
+        <p className="target-how-much-one">
+          Do realizacji celu pozostało: {this.checkMoney(post.body, balance)} zł{" "}
+        </p>
+        <button
+          className="target-remove-button"
+          onClick={this.handleRemove.bind(this, post._id)}
+        >
+          Usuń cel
+        </button>
       </div>
     ));
   };
 
   getTotal = () => {
-    axios.get('http://localhost:3001/api/OperationsAndGoals/getBalancePlus')
-      .then((response) => {
+    axios
+      .get("http://localhost:3001/api/OperationsAndGoals/getBalancePlus", {
+        params: { email: this.state.email }
+      })
+      .then(response => {
         const data = response.data;
-        var plus1 = data.reduce(function (prev, cur) {
+        var plus1 = data.reduce(function(prev, cur) {
           return prev + cur.amount;
         }, 0);
         this.setState({ plus: plus1 });
-
       })
       .catch(() => {
-        alert('błąd pobierania danych');
+        alert("błąd pobierania danych");
       });
-    axios.get('http://localhost:3001/api/OperationsAndGoals/getBalanceMinus')
-      .then((response) => {
+    axios
+      .get("http://localhost:3001/api/OperationsAndGoals/getBalanceMinus", {
+        params: { email: this.state.email }
+      })
+      .then(response => {
         const data = response.data;
-        var minus1 = data.reduce(function (prev, cur) {
+        var minus1 = data.reduce(function(prev, cur) {
           return prev + cur.amount;
         }, 0);
         this.setState({ minus: minus1 });
-
       })
       .catch(() => {
-        alert('błąd pobierania danych');
+        alert("błąd pobierania danych");
       });
-  }
+  };
 
-  handleRemove = (id) => {
-    axios.delete('http://localhost:3001/api/OperationsAndGoals/removetarget', { data: { id: id } })
-    setTimeout(function () { window.location.reload(); }, 1000)
-  }
+  handleRemove = id => {
+    axios.delete("http://localhost:3001/api/OperationsAndGoals/removetarget", {
+      data: { id: id }
+    });
+    setTimeout(function() {
+      window.location.reload();
+    }, 1000);
+  };
   render() {
     return (
       <div className="target-pageContainer">
@@ -166,7 +165,8 @@ class Target extends React.Component {
                 />
               </div>
               <div className="target-inputbox">
-                <input className="target-form-input"
+                <input
+                  className="target-form-input"
                   type="number"
                   placeholder="kwota"
                   name="body"

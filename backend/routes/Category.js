@@ -18,9 +18,10 @@ router.post("/", (req, res) => {
 });
 
 router.get("/", (req, res) => {
-  const filter = req.query.type ? { type: req.query.type } : {};
+  const filter = req.query.type;
+  let email = req.query.email;
 
-  CategoryModel.find(filter)
+  CategoryModel.find({ userid: email, type: filter })
     .then(data => {
       res.json(data);
     })

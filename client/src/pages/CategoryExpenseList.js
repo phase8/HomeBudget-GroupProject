@@ -10,7 +10,8 @@ class CategoryExpenseList extends React.Component {
     this.state = {
       categories: [],
       categoryType: "EXPENSE",
-      selectedCategoryId: ""
+      selectedCategoryId: "",
+      email: localStorage.getItem("email")
     };
   }
 
@@ -19,7 +20,8 @@ class CategoryExpenseList extends React.Component {
 
     axios({
       url: "/categories" + query,
-      method: "GET"
+      method: "GET",
+      params: { email: this.state.email }
     })
       .then(res => {
         this.setState({
