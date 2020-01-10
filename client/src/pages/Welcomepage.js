@@ -10,6 +10,9 @@ let income;
 let outcome;
 let ballance;
 let arrSum = arr => arr.reduce((a, b) => a + b, 0);
+let email = localStorage.getItem("email")
+
+
 
 class Welcomepage extends React.Component {
   constructor(props) {
@@ -21,32 +24,41 @@ class Welcomepage extends React.Component {
       operationtype: "",
       startDate: new Date(),
       ispernament: "",
-      categories: []
+      categories: [],
+      email: "",
     };
   }
 
+  setEmail = () => this.setState({
+    email: email
+  });
+
   getBallance = () => {
     axios
-      .get("http://localhost:3001/api/History/incomes")
+      .get("http://localhost:3001/api/History/incomes",  {
+        params: {
+          email: email
+        }})
       .then(response => {
         const data = response.data;
         this.setState({ posts: data });
         console.log("przychody wsysły się");
-        income = data.map(({ amount }) => amount);
-        income = arrSum(income);
+        income = arrSum(data.map(({ amount }) => amount));
         console.log(income);
       })
       .catch(() => {
         console.error("I dupa");
       });
     axios
-      .get("http://localhost:3001/api/History/outcomes")
+      .get("http://localhost:3001/api/History/outcomes",  {
+        params: {
+          email: email
+        }})
       .then(response => {
         const data = response.data;
         this.setState({ posts: data });
         console.log("wydatki wsysły się");
-        outcome = data.map(({ amount }) => amount);
-        outcome = arrSum(outcome);
+        outcome = arrSum(data.map(({ amount }) => amount));
         console.log(outcome);
         ballance = income - outcome;
         console.log(ballance);
@@ -58,6 +70,7 @@ class Welcomepage extends React.Component {
 
   componentDidMount = () => {
     this.getBallance();
+    this.setEmail();
   };
 
   render() {

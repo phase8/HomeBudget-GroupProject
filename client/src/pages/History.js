@@ -1,6 +1,9 @@
 import React from "react";
 import "../styles/page.css";
 import axios from "axios";
+let email = localStorage.getItem("email")
+
+
 
 class History extends React.Component {
   constructor(props) {
@@ -12,13 +15,21 @@ class History extends React.Component {
       operationtype: "",
       startDate: new Date(),
       ispernament: "",
-      categories: []
+      categories: [],
+      email: "",
     };
   }
 
+  setEmail = () => this.setState({
+    email: email
+  });
+
   getExpenses = () => {
     axios
-      .get("http://localhost:3001/api/History/get")
+      .get("http://localhost:3001/api/History/get", {
+        params: {
+          email: email
+        }})
       .then(response => {
         const data = response.data;
         this.setState({ posts: data });
@@ -32,6 +43,7 @@ class History extends React.Component {
 
   componentDidMount = () => {
     this.getExpenses();
+    this.setEmail();
   };
 
   render() {
