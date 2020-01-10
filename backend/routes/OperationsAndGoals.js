@@ -6,14 +6,18 @@ const CategoryModel = require("../models/CategoryModel").CategoryModel;
 
 router.get("/getblogpost", (req, res) => {
   let email = req.query.email;
-  BlogPost.find({ userid: email }).then(data => {
+  BlogPost.find({
+    userid: email
+  }).then(data => {
     res.json(data);
   });
 });
 
 router.get("/getCategoriesToAddIncomeExpense", (req, res) => {
+  let email = req.query.email;
   CategoryModel.find({
-    type: "EXPENSE"
+    userid: email,
+    type: /EXPENSE/
   }).then(data => {
     res.json(data);
   });
@@ -21,7 +25,10 @@ router.get("/getCategoriesToAddIncomeExpense", (req, res) => {
 
 router.get("/getBalancePlus", (req, res) => {
   let email = req.query.email;
-  IncomeExpense.find({ userid: email, operationtype: /przychód/ }).then(
+  IncomeExpense.find({
+    userid: email,
+    operationtype: /przychód/
+  }).then(
     data => {
       res.json(data);
     }
@@ -30,7 +37,10 @@ router.get("/getBalancePlus", (req, res) => {
 
 router.get("/getBalanceMinus", (req, res) => {
   let email = req.query.email;
-  IncomeExpense.find({ userid: email, operationtype: /wydatek/ }).then(data => {
+  IncomeExpense.find({
+    userid: email,
+    operationtype: /wydatek/
+  }).then(data => {
     res.json(data);
   });
 });
@@ -58,7 +68,7 @@ router.post("/saveincomeexpense", req => {
     const NewIncomeExpense = new IncomeExpense(data);
     NewIncomeExpense.save();
 
-    setInterval(function() {
+    setInterval(function () {
       const NewIncomeExpense = new IncomeExpense(data);
       NewIncomeExpense.save();
     }, 60480000);
@@ -68,13 +78,12 @@ router.post("/saveincomeexpense", req => {
   }
 });
 
-router.delete("/removetarget", function(req, res) {
-  BlogPost.findOneAndRemove(
-    {
+router.delete("/removetarget", function (req, res) {
+  BlogPost.findOneAndRemove({
       _id: req.body.id
     },
     req.body,
-    function(err, data) {
+    function (err, data) {
       if (!err) {
         console.log("");
       }

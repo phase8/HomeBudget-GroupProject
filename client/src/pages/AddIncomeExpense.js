@@ -3,6 +3,9 @@ import axios from "axios";
 import "../styles/page.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { categoryAddUrl } from "../helper/urls";
+import { checkActiveUrl } from "../helper/tools";
+import { Link } from "react-router-dom";
 
 class AddIncomeExpense extends React.Component {
   constructor(props) {
@@ -26,8 +29,9 @@ class AddIncomeExpense extends React.Component {
   getCategories = () => {
     axios
       .get(
-        "http://localhost:3001/api/OperationsAndGoals/getCategoriesToAddIncomeExpense"
-      )
+        "http://localhost:3001/api/OperationsAndGoals/getCategoriesToAddIncomeExpense", {
+        params: { email: this.state.email }
+      })
       .then(response => {
         const data = response.data;
         this.setState({ categories: data });
@@ -40,12 +44,6 @@ class AddIncomeExpense extends React.Component {
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
-  };
-
-  handleChange2 = date => {
-    this.setState({
-      startDate: date
-    });
   };
 
   submit = event => {
@@ -113,7 +111,7 @@ class AddIncomeExpense extends React.Component {
 
   render() {
     return (
-      <div className="AddIncomeExpense-pageContainer">
+      <div className="addIncomeexpense-pagecontainer">
         <div className="target-mainbox">
           <div className="target-title-container">
             <div className="target-box">
@@ -217,8 +215,13 @@ class AddIncomeExpense extends React.Component {
               <button className="target-add-button ">Dodaj</button>
             </form>
           </div>
+          <div className="incomeexpense-add-cattegory">
+            <Link
+              to={categoryAddUrl}
+              className={`${checkActiveUrl(categoryAddUrl)} addincomeexpense-add-cattegory-button `}>Dodaj kategorię wydatków</Link>
+          </div>
         </div>
-      </div>
+      </div >
     );
   }
 }

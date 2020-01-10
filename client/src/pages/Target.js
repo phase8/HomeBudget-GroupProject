@@ -51,20 +51,6 @@ class Target extends React.Component {
     });
   };
 
-  checkMoney = (post, balance) => {
-    if (balance === 0) {
-      return post;
-    } else if (post === 0) {
-      return 0;
-    } else if (balance < 0) {
-      return Math.abs(balance) + post;
-    } else if ((balance > 0) & (post < balance)) {
-      return 0;
-    } else {
-      return post - balance;
-    }
-  };
-
   componentDidMount = () => {
     this.getBlogPost();
     this.getTotal();
@@ -111,7 +97,7 @@ class Target extends React.Component {
       })
       .then(response => {
         const data = response.data;
-        var plus1 = data.reduce(function(prev, cur) {
+        var plus1 = data.reduce(function (prev, cur) {
           return prev + cur.amount;
         }, 0);
         this.setState({ plus: plus1 });
@@ -125,7 +111,7 @@ class Target extends React.Component {
       })
       .then(response => {
         const data = response.data;
-        var minus1 = data.reduce(function(prev, cur) {
+        var minus1 = data.reduce(function (prev, cur) {
           return prev + cur.amount;
         }, 0);
         this.setState({ minus: minus1 });
@@ -135,11 +121,25 @@ class Target extends React.Component {
       });
   };
 
+  checkMoney = (post, balance) => {
+    if (balance === 0) {
+      return post;
+    } else if (post === 0) {
+      return 0;
+    } else if (balance < 0) {
+      return Math.abs(balance) + post;
+    } else if ((balance > 0) & (post < balance)) {
+      return 0;
+    } else {
+      return post - balance;
+    }
+  };
+
   handleRemove = id => {
     axios.delete("http://localhost:3001/api/OperationsAndGoals/removetarget", {
       data: { id: id }
     });
-    setTimeout(function() {
+    setTimeout(function () {
       window.location.reload();
     }, 1000);
   };
