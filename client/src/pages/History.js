@@ -24,7 +24,7 @@ class History extends React.Component {
       .then(response => {
         const data = response.data;
         this.setState({ operations: data });
-        console.log("Zassało się");
+        console.log("Zassałao się");
         console.log(data);
         console.log(this.state);
       })
