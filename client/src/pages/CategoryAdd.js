@@ -41,7 +41,7 @@ class CategoryAdd extends React.Component {
       data: payload
     })
       .then(() => {
-        console.log("Data has been sent to the server");
+        alert("Category saved");
       })
       .catch(() => {
         console.log("Internal server error");

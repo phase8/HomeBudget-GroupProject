@@ -13,6 +13,7 @@ class CategoryExpenseList extends React.Component {
       selectedCategoryId: "",
       email: localStorage.getItem("email")
     };
+    this.deleteCategory = this.deleteCategory.bind(this);
   }
 
   getCategories = type => {
@@ -36,6 +37,9 @@ class CategoryExpenseList extends React.Component {
   componentDidMount() {
     this.getCategories(this.state.categoryType);
   }
+  componentDidUpdate() {
+    this.getCategories(this.state.categoryType);
+  }
 
   onClickHandle(categoryId) {
     this.setState({
@@ -44,15 +48,15 @@ class CategoryExpenseList extends React.Component {
   }
 
   deleteCategory() {
+    if (this.state.selectedCategoryId.length < 2)
+      return alert("Select a category! ");
     axios({
-      url: "/categories/",
-      data: {
-        _id: this.state.selectedCategoryId
-      },
+      url: `/categories/${this.state.selectedCategoryId}`,
       method: "DELETE"
     })
       .then(() => {
-        console.log("Category deleted successfully");
+        alert("Category deleted successfully");
+        this.setState({ selectedCategoryId: "" });
       })
       .catch(() => {
         console.log("Internal server error");

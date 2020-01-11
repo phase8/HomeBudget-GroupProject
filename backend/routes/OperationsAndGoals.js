@@ -28,11 +28,9 @@ router.get("/getBalancePlus", (req, res) => {
   IncomeExpense.find({
     userid: email,
     operationtype: /przychód/
-  }).then(
-    data => {
-      res.json(data);
-    }
-  );
+  }).then(data => {
+    res.json(data);
+  });
 });
 
 router.get("/getBalanceMinus", (req, res) => {
@@ -68,7 +66,7 @@ router.post("/saveincomeexpense", req => {
     const NewIncomeExpense = new IncomeExpense(data);
     NewIncomeExpense.save();
 
-    setInterval(function () {
+    setInterval(function() {
       const NewIncomeExpense = new IncomeExpense(data);
       NewIncomeExpense.save();
     }, 60480000);
@@ -78,14 +76,15 @@ router.post("/saveincomeexpense", req => {
   }
 });
 
-router.delete("/removetarget", function (req, res) {
-  BlogPost.findOneAndRemove({
+router.delete("/removetarget", function(req, res) {
+  BlogPost.findOneAndRemove(
+    {
       _id: req.body.id
     },
     req.body,
-    function (err, data) {
-      if (!err) {
-        console.log("");
+    function(err, data) {
+      if (err) {
+        console.log("Error when removing target!");
       }
     }
   );

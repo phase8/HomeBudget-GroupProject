@@ -24,8 +24,6 @@ class History extends React.Component {
       .then(response => {
         const data = response.data;
         this.setState({ operations: data });
-        console.log("Zassałao się");
-        console.log(data);
       })
       .catch(() => {
         console.error("I dupa");
@@ -57,13 +55,15 @@ class History extends React.Component {
   handleRemove = id => {
     axios
       .delete("http://localhost:3001/api/History/remove-entry", {
-        data: {id: id}
+        data: { id: id }
       })
       .then(response => {
         const data = response.data;
-        if (data) {window.location.reload()}
-      })
-  }
+        if (data) {
+          window.location.reload();
+        }
+      });
+  };
 
   // sortowanie idzie po dacie i jest robione backendem, jak znajdę minimalną chwilę to dorzuce sortowanie po kwocie
   render() {

@@ -32,10 +32,12 @@ router.get("/", (req, res) => {
     });
 });
 
-router.delete("/:id", (req, res) => {
-  CategoryModel.findByIdAndRemove({
-    _id: req.params.id
-  }).then(obj => res.send(obj));
+router.delete("/:id", async (req, res) => {
+  let record = req.params.id;
+
+  const done = await CategoryModel.findByIdAndDelete({ _id: record });
+  if (!done) return res.status(404).send("Something went wrong! Try again");
+  res.send("Category deleted!");
 });
 
 module.exports = router;

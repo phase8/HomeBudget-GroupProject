@@ -11,7 +11,6 @@ router.get("/get", (req, res) => {
   IncomeExpense.find({ userid: email })
     .sort({ date: "asc" })
     .then(data => {
-      console.log("Data: ", data);
       res.json(data);
     })
     .catch(error => {
@@ -20,11 +19,10 @@ router.get("/get", (req, res) => {
 });
 
 router.delete("/remove-entry", (req, res) => {
-  IncomeExpense.findOneAndDelete({ _id: req.body.id })
-    .then(data => {
-      res.json(data)
-    })
-})
+  IncomeExpense.findOneAndDelete({ _id: req.body.id }).then(data => {
+    res.json(data);
+  });
+});
 
 router.get("/incomes", (req, res) => {
   email = req.originalUrl.slice(27);
