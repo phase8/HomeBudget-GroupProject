@@ -86,7 +86,7 @@ class Target extends React.Component {
         >
           Usuń cel
         </button>
-      </div>
+      </div >
     ));
   };
 
@@ -177,11 +177,13 @@ class Target extends React.Component {
               <button className="target-add-button"> Dodaj</button>
             </form>
           </div>
+          <div className="target-display-titlebox">
+            <div className="target-display-title">Twoje cele:</div>
+          </div>
         </div>
         <div>
           <div className="target-display-maincontainer">
-            <div className="target-display-title">Twoje cele:</div>
-            <div className="target-display-box">
+            <div>
               {this.displayBlogPost(this.state.posts)}
             </div>
           </div>
