@@ -26,6 +26,10 @@ class AddIncomeExpense extends React.Component {
     this.getCategories();
   };
 
+
+
+
+
   getCategories = () => {
     axios
       .get(
@@ -47,6 +51,15 @@ class AddIncomeExpense extends React.Component {
     const { name, value } = target;
     this.setState({ [name]: value });
   };
+
+  handledate = date => {
+    this.setState({
+      startDate: date
+    });
+  };
+
+
+
 
   submit = event => {
     event.preventDefault();
@@ -162,7 +175,7 @@ class AddIncomeExpense extends React.Component {
                 <div className="date-picker-box">
                   <DatePicker
                     selected={this.state.startDate}
-                    onChange={this.handleChange2}
+                    onChange={this.handledate}
                     name="startDate"
                     dateFormat="dd/MM/yyyy"
                   />
