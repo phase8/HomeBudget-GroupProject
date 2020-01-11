@@ -5,7 +5,7 @@ import "../styles/page.css";
 class Target extends React.Component {
   state = {
     title: "",
-    body: 0,
+    body: "",
     posts: [],
     plus: 0,
     minus: 0,

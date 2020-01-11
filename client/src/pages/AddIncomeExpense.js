@@ -12,7 +12,7 @@ class AddIncomeExpense extends React.Component {
     super(props);
     this.state = {
       operationname: "",
-      amount: 0,
+      amount: "",
       category: "",
       operationtype: "",
       startDate: new Date(),
@@ -25,10 +25,6 @@ class AddIncomeExpense extends React.Component {
   componentDidMount = () => {
     this.getCategories();
   };
-
-
-
-
 
   getCategories = () => {
     axios
@@ -57,9 +53,6 @@ class AddIncomeExpense extends React.Component {
       startDate: date
     });
   };
-
-
-
 
   submit = event => {
     event.preventDefault();
@@ -130,14 +123,14 @@ class AddIncomeExpense extends React.Component {
         <div className="target-mainbox">
           <div className="target-title-container">
             <div className="target-box">
-              <div className="target-title">Dodaj operację</div>
+              <div className="target-title">Dodaj operację:</div>
             </div>
           </div>
           <div className="target-form-container">
             <form onSubmit={this.submit}>
               <label className="target-amount-one">
                 {" "}
-                Wpisz nazwę operacji{" "}
+                Wpisz nazwę operacji:{" "}
               </label>
               <input
                 className="target-form-input"
@@ -147,7 +140,7 @@ class AddIncomeExpense extends React.Component {
                 value={this.state.operationname}
                 onChange={this.handleChange}
               />
-              <label className="target-amount-one"> Wpisz kwotę </label>
+              <label className="target-amount-one"> Wpisz kwotę: </label>
               <input
                 className="target-form-input"
                 type="number"
