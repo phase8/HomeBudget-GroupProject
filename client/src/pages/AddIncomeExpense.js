@@ -125,7 +125,6 @@ class AddIncomeExpense extends React.Component {
   };
 
   render() {
-    console.log("render");
     return (
       <div className="addIncomeexpense-pagecontainer">
         <div className="target-mainbox">
