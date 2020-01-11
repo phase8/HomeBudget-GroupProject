@@ -29,9 +29,11 @@ class AddIncomeExpense extends React.Component {
   getCategories = () => {
     axios
       .get(
-        "http://localhost:3001/api/OperationsAndGoals/getCategoriesToAddIncomeExpense", {
-        params: { email: this.state.email }
-      })
+        "http://localhost:3001/api/OperationsAndGoals/getCategoriesToAddIncomeExpense",
+        {
+          params: { email: this.state.email }
+        }
+      )
       .then(response => {
         const data = response.data;
         this.setState({ categories: data });
@@ -110,6 +112,7 @@ class AddIncomeExpense extends React.Component {
   };
 
   render() {
+    console.log("render");
     return (
       <div className="addIncomeexpense-pagecontainer">
         <div className="target-mainbox">
@@ -206,6 +209,7 @@ class AddIncomeExpense extends React.Component {
                       }
                       name="category"
                       value={obj.name}
+                      key={obj._id}
                     >
                       {obj.name}
                     </option>
@@ -218,10 +222,15 @@ class AddIncomeExpense extends React.Component {
           <div className="incomeexpense-add-cattegory">
             <Link
               to={categoryAddUrl}
-              className={`${checkActiveUrl(categoryAddUrl)} addincomeexpense-add-cattegory-button `}>Dodaj kategorię wydatków</Link>
+              className={`${checkActiveUrl(
+                categoryAddUrl
+              )} addincomeexpense-add-cattegory-button `}
+            >
+              Dodaj kategorię wydatków
+            </Link>
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 }
