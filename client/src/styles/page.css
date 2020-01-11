@@ -154,6 +154,7 @@
 }
 
 .target-mainbox {
+    z-index: 1;
     top: 0px;
     position: absolute;
     width: 60vw;
@@ -238,8 +239,7 @@
 }
 
 .target-display-title {
-    top: 0px;
-    position: absolute;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     width: 60vw;
@@ -253,16 +253,12 @@
 .target-display-maincontainer {
     width: 100vw;
     left: 0px;
-    top: 450px;
+    top: 430px;
     position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-direction: column;
-    margin: 0px;
+    margin: 0 auto;
     padding: 0px;
     min-width: 100vw;
-    min-height: 100vh;
+    min-height: 100%;
     background-color: rgb(182, 213, 216);
     width: 100vh
 }
@@ -271,6 +267,7 @@
     width: 60vw;
     background-color: rgb(182, 213, 216);
     margin-bottom: 20px;
+    margin: 30px auto;
 }
 
 .target-title-one {
