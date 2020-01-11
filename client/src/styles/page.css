@@ -394,7 +394,8 @@
 .amount,
 .date,
 .category,
-.type {
+.type,
+.remove-entry {
     display: flex;
     align-items: center;
     justify-content: center;

@@ -19,6 +19,13 @@ router.get("/get", (req, res) => {
     });
 });
 
+router.delete("/remove-entry", (req, res) => {
+  IncomeExpense.findOneAndDelete({ _id: req.body.id })
+    .then(data => {
+      res.json(data)
+    })
+})
+
 router.get("/incomes", (req, res) => {
   email = req.originalUrl.slice(27);
   IncomeExpense.find({ userid: email, operationtype: /przychód/ })
