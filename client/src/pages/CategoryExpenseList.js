@@ -16,10 +16,10 @@ class CategoryExpenseList extends React.Component {
     this.deleteCategory = this.deleteCategory.bind(this);
   }
 
-  getCategories = type => {
+  getCategories = async type => {
     const query = type ? `?type=${type}` : "";
 
-    axios({
+    await axios({
       url: "/categories" + query,
       method: "GET",
       params: { email: this.state.email }
@@ -37,9 +37,6 @@ class CategoryExpenseList extends React.Component {
   componentDidMount() {
     this.getCategories(this.state.categoryType);
   }
-  componentDidUpdate() {
-    this.getCategories(this.state.categoryType);
-  }
 
   onClickHandle(categoryId) {
     this.setState({
@@ -47,10 +44,10 @@ class CategoryExpenseList extends React.Component {
     });
   }
 
-  deleteCategory() {
+  async deleteCategory() {
     if (this.state.selectedCategoryId.length < 2)
       return alert("Select a category! ");
-    axios({
+    await axios({
       url: `/categories/${this.state.selectedCategoryId}`,
       method: "DELETE"
     })
@@ -61,6 +58,7 @@ class CategoryExpenseList extends React.Component {
       .catch(() => {
         console.log("Internal server error");
       });
+    this.getCategories(this.state.categoryType);
   }
 
   render() {
