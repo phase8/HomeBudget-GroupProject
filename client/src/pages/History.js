@@ -24,9 +24,6 @@ class History extends React.Component {
       .then(response => {
         const data = response.data;
         this.setState({ operations: data });
-        console.log("Zassało się");
-        console.log(data);
-        console.log(this.state);
       })
       .catch(() => {
         console.error("I dupa");
@@ -45,8 +42,27 @@ class History extends React.Component {
         <div className="date">{operation.date.slice(0, 10)}</div>
         <div className="category">{operation.category}</div>
         <div className="type">{operation.operationtype}</div>
+        <button
+          className="remove-entry"
+          onClick={this.handleRemove.bind(this, operation._id)}
+        >
+          usuń
+        </button>
       </div>
     ));
+  };
+
+  handleRemove = id => {
+    axios
+      .delete("http://localhost:3001/api/History/remove-entry", {
+        data: { id: id }
+      })
+      .then(response => {
+        const data = response.data;
+        if (data) {
+          window.location.reload();
+        }
+      });
   };
 
   // sortowanie idzie po dacie i jest robione backendem, jak znajdę minimalną chwilę to dorzuce sortowanie po kwocie
@@ -60,6 +76,7 @@ class History extends React.Component {
           <div className="date">data</div>
           <div className="category">kategoria</div>
           <div className="type">typ</div>
+          <div className="remove-entry">usuń operację</div>
         </div>
         <div className="history-display-box">
           {this.displayHistory(this.state.operations)}
