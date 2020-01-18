@@ -1,0 +1,27 @@
+{
+  "name": "home_budget_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd backend && nodemon server.js\" \"cd client && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BinaryWorlds/HomeBudget-GroupProject.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BinaryWorlds/HomeBudget-GroupProject/issues"
+  },
+  "homepage": "https://github.com/BinaryWorlds/HomeBudget-GroupProject#readme",
+  "dependencies": {
+    "concurrently": "^5.0.1",
+    "joi": "^14.3.1",
+    "mongodb": "^3.4.1",
+    "nodemon": "^2.0.2",
+    "react-datepicker": "^2.10.1"
+  }
+}
