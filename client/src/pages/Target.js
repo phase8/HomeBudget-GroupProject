@@ -145,13 +145,10 @@ class Target extends React.Component {
   };
   render() {
     return (
-      <div className="target-pageContainer">
+      <div className="add-income-expense-page-container">
+
         <div className="target-mainbox">
-          <div className="target-title-container">
-            <div className="target-box">
-              <div className="target-title">Dodaj cel finansowy</div>
-            </div>
-          </div>
+          <div className="target-title">Dodaj cel finansowy</div>
           <div className="target-form-container">
             <form className="target-form" onSubmit={this.submit}>
               <div className="target-inputbox">
